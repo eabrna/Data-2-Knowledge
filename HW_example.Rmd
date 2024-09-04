@@ -1,0 +1,97 @@
+---
+title: "Homework 00"
+author: "Washington, George; Jefferson, Thomas; Madison, James" # <--- Please change to your names here, format: "LastName, FirstName"
+date: 'Due: Wed Aug 28 | 11:59pm'
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+**APMA 3150 \| Fall 2024 \| University of Virginia**
+
+***"On my honor, I pledge that I have neither given nor received unauthorized aid on this assignment." - The author of this RMarkdown file.***
+
+<!--- Solution Region --->
+
+```{css solution-region, echo=FALSE}
+.solution {
+    backgroud-color: 232D4B10;
+    border-style: solid;
+    border-color: 232D4B;
+    padding: .5em;
+    margin: 20px
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## [Group Work Guideline]{style="color:#0066CC"}
+
+### Overall objectives
+- Teach and learn from your peers (leverage opportunity offered by our physical presence).
+- Improve learning/grade of all your teammates.
+
+### Specific goals for teamwork sessions (what)
+- Every team member should gain a good understanding of each problem and its solution.
+- Discuss any thoughts triggered by problems that can enhance learning.
+- Submit one homework solution per team.
+
+### Methods (how)
+1. Meet each other: names, year in program, degree, hometown, anything else of interest; Learn names.
+2. Choose scribe (to write the team solution) and each team member should take a turn as scribe.
+3. Choose moderator (cut off discussions/watch time); each team member should take a turn as moderator.
+4. Pass individual homework solutions in a circle, so that each team member has read other team members’ homework solutions and is thus aware of the starting set from which your team discussions will follow.
+5. Make two passes through all problems of the assignment:
+    + Pass 1: Focus on deriving answer for the scribe to write into the team homework submission.
+    + Pass 2: Go back through each problem and discuss any thoughts triggered by the problem (e.g., discuss assumptions required for formulas and what happens if they do not hold; this will enhance conceptual learning).
+6. While executing Pass 1, let’s say for a problem, two members have one answer, and the third member (MVP) has a different answer. First determine which answer is correct. Let’s say the 2-member answer was correct. Do not have just one of the 2 members explain the steps taken to reach the answer to the MVP while the other two members engage in other activities. If you listen to your peer, you may find her/his reasoning to be different from yours, which improves your own understanding. Or you may find your way of reasoning to be easier for the MVP to follow. Therefore stay engaged.
+7. One conversation at a time. No side bars. Stay fully engaged in the team conversation.
+8. No multi-tasking (if a discussion is running too long, lean in, and bring conversation to an end).
+
+### Motivation (why)
+- Increased learning occurs when talking about what you have learned, and through teaching.
+- Importance placed on teamwork and communications skills by companies.
+
+## [Problems]{style="color:#FF7F50"}
+
+We need to first load Verzani's textbook packages `MASS`, `UsingR`, our course package `APMA3150` in our working environment. 
+```{r message=FALSE}
+library(MASS)
+library(UsingR)
+library(APMA3150)
+```
+
+### 1. Example 2.10 from URIS: Computing a proportion
+
+Empirically checking that Chebyshev’s theorem is satisfied for a given data set requires that we compute the proportion of values that satisfy some criteria. This is a fairly common question. Let’s see how it would be done in R.
+
+For the exec.pay `UsingR` data set there are 199 values. What proportion are more than 3 standard deviations from the mean?
+
+#### {.solution}
+Translating, this means the absolute value of the z-scores should be more than 3:
+```{r}
+z <- (exec.pay - mean(exec.pay)) / sd(exec.pay)
+out <- abs(z) > 3               # 199 TRUE or FALSE values
+sum(out) / length(z)            # sum of logical
+```
+That is 1.5% if the z-scores are larger than 3. This is much more than would be expected for bell shaped data (we would expect 0.3%) but less than theoretically possible, which is 11.1% (1/9).
+
+### 2. Example 2.11 from URIS: SAT rankings
+Many college-bound students in the United States are familiar with the IQR, even if not by name. The ubiquitous college rankings almost always list the 25th and 75th percentiles for SAT scores. The IQR is Q3−Q1. “Writing” has the smallest average IQR of 85, with “reading” the highest with 98.75. Does the data imply that nearly 25% of Yale students have perfect scores (800 on each category)?
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
