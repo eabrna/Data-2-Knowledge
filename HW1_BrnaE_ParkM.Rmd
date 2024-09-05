@@ -104,6 +104,7 @@ Write a function isprime() that checks if a number x is prime by dividing x by a
 # Solution here.
 isprime <- function(x) {
   if (x < 2) return(FALSE)
+  if ( x == 2) return(TRUE)
   y = x - 1
   test_num = c(2:y)
   for (n in test_num) {
@@ -114,6 +115,19 @@ isprime <- function(x) {
   
 isprime(4)
 isprime(37)
+
+##EXTRA CREDIT
+
+prime_num = primes[1:25]
+all_num = c(1:100)
+
+for (n in all_num) {
+  test = isprime(n)
+  if (test == TRUE)
+    print(paste(n, 'is a prime number.'))
+}
+  
+
 ```
 
 ### 4. Numeric data. Complete problem 2.61 from URIS.
