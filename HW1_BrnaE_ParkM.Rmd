@@ -1,0 +1,129 @@
+---
+title: "Homework 1"
+author: "Brna, Elliot; Park, Mia" # <--- Please change to your names here, format: "LastName, FirstName"
+date: 'Due: Fri Sep 6 | 11:59pm'
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+**APMA 3150 \| Fall 2024 \| University of Virginia**
+
+***"On my honor, I pledge that I have neither given nor received unauthorized aid on this assignment." - The author of this RMarkdown file.***
+
+<!--- Solution Region --->
+
+```{css solution-region, echo=FALSE}
+.solution {
+    backgroud-color: 232D4B10;
+    border-style: solid;
+    border-color: 232D4B;
+    padding: .5em;
+    margin: 20px
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+
+## [Problems]{style="color:#FF7F50"}
+
+We need to first load Verzani's textbook packages `MASS`, `UsingR`, our course package `APMA3150` in our working environment. 
+```{r message=FALSE}
+library(MASS)
+library(UsingR)
+library(APMA3150)
+```
+
+### 1. Example 2.10 from URIS: Computing a proportion
+
+Empirically checking that Chebyshev’s theorem is satisfied for a given data set requires that we compute the proportion of values that satisfy some criteria. This is a fairly common question. Let’s see how it would be done in R.
+
+For the exec.pay `UsingR` data set there are 199 values. What proportion are more than 3 standard deviations from the mean?
+
+#### {.solution}
+Translating, this means the absolute value of the z-scores should be more than 3:
+```{r}
+z <- (exec.pay - mean(exec.pay)) / sd(exec.pay)
+out <- abs(z) > 3               # 199 TRUE or FALSE values
+sum(out) / length(z)            # sum of logical
+```
+That is 1.5% if the z-scores are larger than 3. This is much more than would be expected for bell shaped data (we would expect 0.3%) but less than theoretically possible, which is 11.1% (1/9).
+
+### 2. Example 2.11 from URIS: SAT rankings
+Many college-bound students in the United States are familiar with the IQR, even if not by name. The ubiquitous college rankings almost always list the 25th and 75th percentiles for SAT scores. The IQR is Q3−Q1. “Writing” has the smallest average IQR of 85, with “reading” the highest with 98.75. Does the data imply that nearly 25% of Yale students have perfect scores (800 on each category)?
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+### 1. Negation operator. Problem 2.15 from URIS.
+The negation operator ! is used to reverse Boolean values. For example:
+```{r}
+A <- c(TRUE, FALSE, TRUE, TRUE)
+!A
+```
+One of De Morgan's laws in R code is !(A & B) = !A | !B. Verify this with B  <- c(FALSE, TRUE, FALSE, TRUEE) and A as above.
+```{r}
+#solution here
+```
+
+### 2. CD sales. Problem 2.20 from URIS.
+Suppose monthly sales (in 10,000s) of CDs in 2013 were
+
+JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
+79  74  161 127 133 210 99  143 249 249 368 32
+
+Enter the data into a data vector cd. Through indexing, form two data vectors: one containing the months with 31 days, the other the remaining months. Compare the means of these two data vectors.
+```{r}
+# Solution here.
+```
+
+### 3. Prime numbers. Complete problem 2.25 from URIS.
+*Name your function isprime(), then call this function with 4 and 37 as arguments to test the correctness
+
+Write a function isprime() that checks if a number x is prime by dividing x by all the values in 2, . . . , x  1 then checking to see if there is a remainder of 0. The expression a %% b returns the remainder of a divided by b.
+```{r}
+# Solution here.
+
+```
+
+### 4. Numeric data. Complete problem 2.61 from URIS.
+Numeric data can be discretized through the cut function. For example, the command cut(bumpers, c(0, 1000, 2000, 3000, 4000)) will categorize the repair cost of a bumper by its rough amount. Make a table of this. Which range has the largest number of data points?
+
+```{r}
+# Solution here.
+discretized_bumpers = cut(bumpers, c(0, 1000, 2000, 3000, 4000))
+table(disc_bumpers)
+
+```
+### Extra Credit
+The range ($1000, $2000] has the largest number of data points.
+```{r}
+class(discretized_bumpers)
+class(bumpers)
+```
+The change from type numeric to class is because cut() is sorting the bumper costs into the different money ranges(categories/levels) which requires data type 'factor.'
+
+### 5. Cylinders. Complete problem 2.62 from URIS.
+The Cylinders variable Cars93 (MASS) data set records the number of cylinders in a factor. What kind of summary does R compute for factors? Look at summary(Cars93$Cylinders) to see.
+
+```{r}
+# Solution here.
+summary(Cars93$Cylinders)
+```
+
+summary() for vectors of class 'factor' computes the number of times each level (category) is repeated in the vector
