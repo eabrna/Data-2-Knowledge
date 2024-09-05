@@ -53,10 +53,16 @@ A <- c(TRUE, FALSE, TRUE, TRUE)
 !A
 ```
 One of De Morgan's laws in R code is !(A & B) = !A | !B. Verify this with B  <- c(FALSE, TRUE, FALSE, TRUEE) and A as above.
-```{r}
-```
 # !(A&B) indicates that both A and B are not true
 # !A|!B indicates that either A is false or B is false (or both)
+```{r}
+A <- c(TRUE, FALSE, TRUE, TRUE)
+B <- c(FALSE, TRUE, FALSE, TRUE)
+!(A&B)
+!A|!B
+!(A&B) == (!A|!B)
+```
+Written out:
 
 A <- c(TRUE, FALSE, TRUE, TRUE)
 B <- c(FALSE, TRUE, FALSE, TRUE)
@@ -75,17 +81,25 @@ Therefore, !(A & B) = !A | !B = c(TRUE, TRUE, TRUE, FALSE)
 Suppose monthly sales (in 10,000s) of CDs in 2013 were
 
 JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
-79  74  161 127 133 210 99  143 249 249 368 32
+79  74  161 127 133 210 99  143 249 249 368 302
 
 Enter the data into a data vector cd. Through indexing, form two data vectors: one containing the months with 31 days, the other the remaining months. Compare the means of these two data vectors.
 ```{r}
 # Solution here.
+# Months with 30 days: Apr (4), Jun(6), Sep(9), Nov(11)
+cd = c(79, 74, 161, 127, 133, 210, 99, 143, 249, 249, 368, 302)
+thirty_days = cd[c(4,6,9,11)]         # CD sales for months with 30 days
+other_months = cd[c(-4,-6,-9,-11)]    # CD sales for months without 30 days
+
+mean(thirty_days)
+mean(other_months)
 ```
+The months with 30 days have higher CD sales on average.
 
 ### 3. Prime numbers. Complete problem 2.25 from URIS.
 *Name your function isprime(), then call this function with 4 and 37 as arguments to test the correctness
 
-Write a function isprime() that checks if a number x is prime by dividing x by all the values in 2, . . . , x  1 then checking to see if there is a remainder of 0. The expression a %% b returns the remainder of a divided by b.
+Write a function isprime() that checks if a number x is prime by dividing x by all the values in 2, . . . , x-1 then checking to see if there is a remainder of 0. The expression a %% b returns the remainder of a divided by b.
 ```{r}
 # Solution here.
 
@@ -97,11 +111,12 @@ Numeric data can be discretized through the cut function. For example, the comma
 ```{r}
 # Solution here.
 discretized_bumpers = cut(bumpers, c(0, 1000, 2000, 3000, 4000))
-table(disc_bumpers)
+table(discretized_bumpers)
 
 ```
-### Extra Credit
 The range ($1000, $2000] has the largest number of data points.
+
+### Extra Credit
 ```{r}
 class(discretized_bumpers)
 class(bumpers)
@@ -116,4 +131,4 @@ The Cylinders variable Cars93 (MASS) data set records the number of cylinders in
 summary(Cars93$Cylinders)
 ```
 
-summary() for vectors of class 'factor' computes the number of times each level (category) is repeated in the vector
+summary() for vectors of class 'factor' computes the number of times each level is repeated in the vector (in this case the number of cylinders, if applicable, in 1993 cars) 
