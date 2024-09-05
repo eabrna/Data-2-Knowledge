@@ -102,7 +102,18 @@ The months with 30 days have higher CD sales on average.
 Write a function isprime() that checks if a number x is prime by dividing x by all the values in 2, . . . , x-1 then checking to see if there is a remainder of 0. The expression a %% b returns the remainder of a divided by b.
 ```{r}
 # Solution here.
-
+isprime <- function(x) {
+  if (x < 2) return(FALSE)
+  y = x - 1
+  test_num = c(2:y)
+  for (n in test_num) {
+    if (x %% n == 0) return(FALSE)
+  }
+  return(TRUE)
+}
+  
+isprime(4)
+isprime(37)
 ```
 
 ### 4. Numeric data. Complete problem 2.61 from URIS.
