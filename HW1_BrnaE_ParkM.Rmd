@@ -46,30 +46,6 @@ library(UsingR)
 library(APMA3150)
 ```
 
-### 1. Example 2.10 from URIS: Computing a proportion
-
-Empirically checking that Chebyshev’s theorem is satisfied for a given data set requires that we compute the proportion of values that satisfy some criteria. This is a fairly common question. Let’s see how it would be done in R.
-
-For the exec.pay `UsingR` data set there are 199 values. What proportion are more than 3 standard deviations from the mean?
-
-#### {.solution}
-Translating, this means the absolute value of the z-scores should be more than 3:
-```{r}
-z <- (exec.pay - mean(exec.pay)) / sd(exec.pay)
-out <- abs(z) > 3               # 199 TRUE or FALSE values
-sum(out) / length(z)            # sum of logical
-```
-That is 1.5% if the z-scores are larger than 3. This is much more than would be expected for bell shaped data (we would expect 0.3%) but less than theoretically possible, which is 11.1% (1/9).
-
-### 2. Example 2.11 from URIS: SAT rankings
-Many college-bound students in the United States are familiar with the IQR, even if not by name. The ubiquitous college rankings almost always list the 25th and 75th percentiles for SAT scores. The IQR is Q3−Q1. “Writing” has the smallest average IQR of 85, with “reading” the highest with 98.75. Does the data imply that nearly 25% of Yale students have perfect scores (800 on each category)?
-
-#### {.solution}
-```{r}
-# Type your solution here...
-```
-Write your conclusion here...
-
 ### 1. Negation operator. Problem 2.15 from URIS.
 The negation operator ! is used to reverse Boolean values. For example:
 ```{r}
@@ -78,8 +54,22 @@ A <- c(TRUE, FALSE, TRUE, TRUE)
 ```
 One of De Morgan's laws in R code is !(A & B) = !A | !B. Verify this with B  <- c(FALSE, TRUE, FALSE, TRUEE) and A as above.
 ```{r}
-#solution here
 ```
+# !(A&B) indicates that both A and B are not true
+# !A|!B indicates that either A is false or B is false (or both)
+
+A <- c(TRUE, FALSE, TRUE, TRUE)
+B <- c(FALSE, TRUE, FALSE, TRUE)
+A & B <- c(FALSE, FALSE, FALSE, TRUE)
+
+!(A & B) <- c(TRUE, TRUE, TRUE, FALSE) 
+
+!A <- c(FALSE, TRUE, FALSE, FALSE)
+!B <- c(TRUE, FALSE, TRUE, FALSE)
+
+!A | !B <- c(TRUE, TRUE, TRUE, FALSE)
+
+Therefore, !(A & B) = !A | !B = c(TRUE, TRUE, TRUE, FALSE)
 
 ### 2. CD sales. Problem 2.20 from URIS.
 Suppose monthly sales (in 10,000s) of CDs in 2013 were
