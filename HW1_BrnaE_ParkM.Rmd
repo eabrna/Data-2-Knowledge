@@ -156,4 +156,4 @@ The Cylinders variable Cars93 (MASS) data set records the number of cylinders in
 summary(Cars93$Cylinders)
 ```
 
-summary() for vectors of class 'factor' computes the number of times each level is repeated in the vector (in this case the number of cylinders, if applicable, in 1993 cars) 
+summary() for vectors of class 'factor' computes the number of times each level is repeated in the vector (in this case the number of cylinders, if applicable, in 1993 cars). For example, the summary shows that level 3 appears 3 times in the data, level 4 appears 49 times, etc.
