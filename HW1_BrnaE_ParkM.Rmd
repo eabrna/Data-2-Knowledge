@@ -85,7 +85,6 @@ JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
 
 Enter the data into a data vector cd. Through indexing, form two data vectors: one containing the months with 31 days, the other the remaining months. Compare the means of these two data vectors.
 ```{r}
-# Solution here.
 # Months with 30 days: Apr (4), Jun(6), Sep(9), Nov(11)
 cd = c(79, 74, 161, 127, 133, 210, 99, 143, 249, 249, 368, 302)
 thirty_days = cd[c(4,6,9,11)]         # CD sales for months with 30 days
@@ -101,7 +100,7 @@ The months with 30 days have higher CD sales on average.
 
 Write a function isprime() that checks if a number x is prime by dividing x by all the values in 2, . . . , x-1 then checking to see if there is a remainder of 0. The expression a %% b returns the remainder of a divided by b.
 ```{r}
-# Solution here.
+
 isprime <- function(x) {
   if (x < 2) return(FALSE)
   if ( x == 2) return(TRUE)
@@ -146,14 +145,14 @@ The range ($1000, $2000] has the largest number of data points.
 class(discretized_bumpers)
 class(bumpers)
 ```
-The change from type numeric to class is because cut() is sorting the bumper costs into the different money ranges(categories/levels) which requires data type 'factor.'
+The change from data type numeric to factor is because cut() is sorting the bumper costs into the different money ranges(categories/levels) which requires data type 'factor.'
 
 ### 5. Cylinders. Complete problem 2.62 from URIS.
 The Cylinders variable Cars93 (MASS) data set records the number of cylinders in a factor. What kind of summary does R compute for factors? Look at summary(Cars93$Cylinders) to see.
 
 ```{r}
-# Solution here.
+
 summary(Cars93$Cylinders)
 ```
 
-summary() for vectors of class 'factor' computes the number of times each level is repeated in the vector (in this case the number of cylinders, if applicable, in 1993 cars). For example, the summary shows that level 3 appears 3 times in the data, level 4 appears 49 times, etc.
+summary() for vectors of type 'factor' computes the number of times each level is repeated in the vector (in this case the number of cylinders, if applicable, in 1993 cars). For example, the summary shows that level 3 (cars with 3 cylinders) appears 3 times in the data, level 4 (cars with 4 cylinders) appears 49 times, etc.
