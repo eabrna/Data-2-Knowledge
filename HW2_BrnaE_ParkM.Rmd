@@ -82,7 +82,30 @@ The data set rivers contains the lengths (in miles) of 141 major rivers in North
 #### {solution}
 ```{r}
 # Type your solution here.
+rivers = sort(rivers)
 
+#1
+i = 0
+for (n in rivers) {
+  if (n < 500)
+    i = i + 1
+}
+p1 = i/141
+print(paste('The proportion of rivers less than 500 miles long is', p1))
+
+#2 
+j = 0
+mean = mean(rivers)
+for (n in rivers) {
+  if (n < mean)
+    j = j + 1
+}
+p2 = j/141
+print(paste('The proportion of rivers less than 500 miles long is', p2))
+
+#3
+q3 = quantile(rivers, 0.75)
+print(paste('The 0.75 quantile of rivers is', q3))
 
 ```
 Write your conclusion here...
