@@ -182,15 +182,23 @@ Write your conclusion here...
 ### 6. Mode function. URIS Problem 2.60.
 Write a function to find the most common value of a data vector, e.g., the “mode.”
 
-*example on code in book, just need to functionalize it (p. 59 according to book, 79 actually)
-
 #### {solution}
 ```{r}
 # Type your solution here...
 
+vec = round(runif(50, min=0, max=10), 0) #generates random vector
+
+table(vec)
+
+table(vec) == max(table(vec))
+
+which(table(vec) == max(table(vec)))
+
+mode = as.numeric(names( which(table(vec) == max(table(vec))) ))
+
+print(paste('The mode of the vector is', mode))
 
 ```
-Write your conclusion here...
 
 ### 7. Split function. URIS Problem 3.7.
 The split function will coerce its second argument to a factor then split. This is useful if the grouping variable is stored as a numeric value. Verify this by splitting the mpg variable in the mtcars data set by the cyl variable.
