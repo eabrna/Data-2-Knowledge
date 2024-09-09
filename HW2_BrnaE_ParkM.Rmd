@@ -220,8 +220,13 @@ center?
 #### {solution}
 ```{r}
 # Type your solution here...
+
+par(mfcol=c(1,2))
+boxplot(twins$Foster, main="Boxplot of Foster Twins")
+boxplot(twins$Biological,  main="Boxplot of Biological Twins")
+
 ```
-Write your conclusion here...
+The boxplots for both the foster and biological twins appears to have very similar spreads, with the center of the boxplot for foster twins being slightly higher than that of the biological plot.
 
 ### 9. Normal body temperature. URIS Problem 3.12.
 The data set normtemp (UsingR) contains normal body temperature measurements for 130 healthy individuals recorded in the variable temperature. The variable gender is 1 for a male subject and 2 for a female subject. Break the data up by gender and create side-by-side boxplots. Does it appear that males and females have similar normal body temperatures?
