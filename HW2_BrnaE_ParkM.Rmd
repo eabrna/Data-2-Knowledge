@@ -155,9 +155,10 @@ The Michelson (HistData) data set records 100 measurements by Michelson of the s
 
 #### {solution}
 ```{r}
-# Type your solution here...
+qqnorm(Michelson$velocity, main="Q-Q plot & line for velocity")
+qqline(Michelson$velocity, col="blue")
 ```
-Write your conclusion here...
+The Q-Q plot for variable velocity is relatively linear with increasing deviation as the absolute value of the theoretical quantiles increases.The data for speed of light will moderately resemble a normal distribution.
 
 ### 5. Car models. URIS Problem 2.59.
 In the Cars93 (MASS) data set, which is more skewed, the Price or MPG.highway variable?
