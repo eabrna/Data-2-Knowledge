@@ -85,30 +85,30 @@ The data set rivers contains the lengths (in miles) of 141 major rivers in North
 rivers = sort(rivers)
 
 #1
-i = 0
-for (n in rivers) {
-  if (n < 500)
-    i = i + 1
+count_500 = 0  # keeps track of the number of rivers less than 500 miles
+for (river in rivers) {
+  if (river < 500)
+    count_500 = count_500 + 1
 }
-p1 = i/141
-print(paste('The proportion of rivers less than 500 miles long is', p1))
+proportion_500 = count_500/141    # calculates the proportion of rivers less than 500 miles long
+print(paste('The proportion of rivers less than 500 miles long is', proportion_500))
 
 #2 
-j = 0
+count_mean = 0
 mean = mean(rivers)
-for (n in rivers) {
-  if (n < mean)
-    j = j + 1
+for (river in rivers) {
+  if (river < mean)
+    count_mean = count_mean + 1
 }
-p2 = j/141
-print(paste('The proportion of rivers less than 500 miles long is', p2))
+proportion_mean = count_mean/141
+print(paste('The proportion of rivers less than 500 miles long is', proportion_mean))
 
 #3
 q3 = quantile(rivers, 0.75)
-print(paste('The 0.75 quantile of rivers is', q3))
+print(paste('The 0.75 quantile of rivers is', q3, 'miles'))
 
 ```
-Write your conclusion here...
+
 
 ### 2. Rivers in North America (Part 2). URIS Problem 2.44.
 Compare values of the mean, median, and 25%-trimmed mean on the built-in rivers data set. Is there a big difference among the three?
@@ -123,7 +123,7 @@ river_stats["Mean"]
 river_stats["Median"]
 
 trimmed_mean = mean(rivers, trim = .25)
-print('25%-trimmed mean'); trimmed_mean
+print(paste('25%-trimmed mean = ',trimmed_mean))
 
 river_stats["Min."]
 
@@ -137,18 +137,31 @@ hist(rivers)
 
 
 ```
-Write your conclusion here...
+
+
 ### 3. Compensation for CEOs. URIS Problem 2.54.
 Sometimes a data set is so skewed that it can help if we transform the data prior to looking at it. A common transformation for long-tailed data sets is to take the logarithm of the data. 
 For example, the exec.pay (UsingR) data set is highly skewed. Look at histograms before and after taking a logarithmic transform. Which is better at showing the data and why? (You can transform with the command log(1 + exec.pay, 1).) 
-Find the median and the mean for the transformed data. How do they correspond to the median and mean f the untransformed data?
+Find the median and the mean for the transformed data. How do they correspond to the median and mean of the un-transformed data?
 
 *Use command par(mfrow = c(1,2)) to create two sub-graphs in one graph.
 #### {solution}
 ```{r}
 # Type your solution here...
+log_transform = log(1+exec.pay,10)
+par(mfrow = c(2,1))
+hist(exec.pay, main = "Unscaled Executive Pay")
+hist(log_transform,, main = "Logarithmically-scaled Executive Pay")
+
+# Prints the mean and median of the un-transformed exec pay data
+print(paste("Untransformed median: ", median(exec.pay)))
+print(paste("Untransformed mean: ", mean(exec.pay)))
+
+# Prints the mean and median of the logarithmically-scaled exec pay data
+print(paste("Logarithmic median: ", median(log_transform)))
+print(paste("Logarithmic mean: ", mean(log_transform)))
 ```
-Write your conclusion here...
+The mean and median of the exec data with no transformations are much larger than that of the logarithmically scaled data. The mean and median of the scaled data are also much closer together (different by <.01)than the median and mean of the un-transformed data. 
 
 ### 4.Speed of light. URIS Problem 2.56.
 The Michelson (HistData) data set records 100 measurements by Michelson of the speed of light (in the variable velocity). Make a quantile-normal graph and discuss if the graphic shows the points falling on a straight line.
@@ -163,21 +176,28 @@ The Q-Q plot for variable velocity is relatively linear with increasing deviatio
 ### 5. Car models. URIS Problem 2.59.
 In the Cars93 (MASS) data set, which is more skewed, the Price or MPG.highway variable?
 
-*Please include two graphs: each should contain two sub-
-graphs; Graph 1: histograms; Graph 2: Q-Q norm plots. To answer the question which is more skewed, install and load e1071 library package and give Type-1 skewness values in your
-answers
+*Please include two graphs: each should contain two sub-graphs; 
+Graph 1: histograms; Graph 2: Q-Q norm plots. To answer the question which is more skewed, install and load e1071 library package and give Type-1 skewness values in your answers
 
 *skewness(x, type = 1)
 #### {solution}
 ```{r}
 # Type your solution here...
-install.packages('e1071')
 library(e1071)
 
+par(mfrow = c(1,2))
+hist(Cars93$Price, main = "Price of 1993 Cars")
+hist(Cars93$MPG.highway, main = "Highway MPG of 1993 Cars")
+
+par(mfrow = c(1,2))
+qqnorm(Cars93$Price, main = "Price of 1993 Cars")
+qqnorm(Cars93$MPG.highway, main = "Highway MPG of 1993 Cars")
+
+print(paste("Price Skewness: ", skewness(Cars93$Price, type = 1)))
+print(paste("Highway MPG skewness: ", skewness(Cars93$MPG.highway)))
 
 ```
-Write your conclusion here...
-
+The price of 1993 cars is more skewed than their highway MPG based on its higher Type 1 'skewness'.
 
 ### 6. Mode function. URIS Problem 2.60.
 Write a function to find the most common value of a data vector, e.g., the “mode.”
@@ -186,17 +206,23 @@ Write a function to find the most common value of a data vector, e.g., the “mo
 ```{r}
 # Type your solution here...
 
-vec = round(runif(50, min=0, max=10), 0) #generates random vector
+mode <- function(vec){
+  
+  # checks to see which parts of the vector (transformed into a table) has the maximum number of repeats
+  mode = as.numeric(names( which(table(vec) == max(table(vec))) ))
 
-table(vec)
+  # prints the answer(s)
+  if (length(mode) > 1)
+    
+    cat("The modes of the vector are", mode, sep = " ")
+  
+  else   
+    print(paste('The mode of the vector is', mode))
+  
+}
 
-table(vec) == max(table(vec))
-
-which(table(vec) == max(table(vec)))
-
-mode = as.numeric(names( which(table(vec) == max(table(vec))) ))
-
-print(paste('The mode of the vector is', mode))
+test = c(10,11,11,12,11,13,10,12,12)
+mode(test)
 
 ```
 
@@ -209,11 +235,10 @@ The split function will coerce its second argument to a factor then split. This 
 split(mtcars$mpg, mtcars$cyl)
 
 ```
-Write your conclusion here...
+The split() function does as suggested, splitting the MPG of cars in the 1974 Motor Trend magazine by a numeric value, the number of cylinders.
 
 ### 8. Foster and biological twins. URIS Problem 3.10.
-For the data set twins (UsingR) make a boxplot of the Foster and Biological variables. Do they appear to have the same spread? The same
-center?
+For the data set twins (UsingR) make a boxplot of the Foster and Biological variables. Do they appear to have the same spread? The same center?
 
 * Please include the boxplots as well; it should be side-by-side boxplots in one graph.
 
@@ -221,12 +246,9 @@ center?
 ```{r}
 # Type your solution here...
 
-par(mfcol=c(1,2))
-boxplot(twins$Foster, main="Boxplot of Foster Twins")
-boxplot(twins$Biological,  main="Boxplot of Biological Twins")
-
+boxplot(twins[,1:2], main="Boxplot of the IQs of Identical Twins Separated at Birth")
 ```
-The boxplots for both the foster and biological twins appears to have very similar spreads, with the center of the boxplot for foster twins being slightly higher than that of the biological plot.
+The boxplots for the IQs of foster and biological twins appear to have very similar centers/means (with that of biological twins being slightly higher). The spreads of IQs of both fostered twins and biological twins are also similar with the spread of the IQs for biological twins being larger.
 
 ### 9. Normal body temperature. URIS Problem 3.12.
 The data set normtemp (UsingR) contains normal body temperature measurements for 130 healthy individuals recorded in the variable temperature. The variable gender is 1 for a male subject and 2 for a female subject. Break the data up by gender and create side-by-side boxplots. Does it appear that males and females have similar normal body temperatures?
@@ -239,5 +261,4 @@ names(gender_split) = c("Male", "Female")
 
 boxplot(gender_split, main="Normal Body Temperature Split by Gender")
 ```
-Write your conclusion here...
 While males and females do have similar normal body temperatures, generally female normal body temperatures are higher. 
