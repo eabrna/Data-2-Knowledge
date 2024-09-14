@@ -1,0 +1,202 @@
+---
+title: "Homework 3"
+author: "Brna, Elliot; Park, Mia"
+date: 'Due: Wed Sep 18 | 11:59pm'
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+**APMA 3150 \| Fall 2024 \| University of Virginia**
+
+***"On my honor, I pledge that I have neither given nor received unauthorized aid on this assignment." - Elliot Brna and Mia Park.***
+
+<!--- Solution Region --->
+
+```{css solution-region, echo=FALSE}
+.solution {
+    background-color: 232D4B10;
+    border-style: solid;
+    border-color: 232D4B;
+    padding: .5em;
+    margin: 20px
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## [Group Work Guideline]{style="color:#0066CC"}
+
+### Overall objectives
+- Teach and learn from your peers (leverage opportunity offered by our physical presence).
+- Improve learning/grade of all your teammates.
+
+### Specific goals for teamwork sessions (what)
+- Every team member should gain a good understanding of each problem and its solution.
+- Discuss any thoughts triggered by problems that can enhance learning.
+- Submit one homework solution per team.
+
+### Methods (how)
+1. Meet each other: names, year in program, degree, hometown, anything else of interest; Learn names.
+2. Choose scribe (to write the team solution) and each team member should take a turn as scribe.
+3. Choose moderator (cut off discussions/watch time); each team member should take a turn as moderator.
+4. Pass individual homework solutions in a circle, so that each team member has read other team members’ homework solutions and is thus aware of the starting set from which your team discussions will follow.
+5. Make two passes through all problems of the assignment:
+    + Pass 1: Focus on deriving answer for the scribe to write into the team homework submission.
+    + Pass 2: Go back through each problem and discuss any thoughts triggered by the problem (e.g., discuss assumptions required for formulas and what happens if they do not hold; this will enhance conceptual learning).
+6. While executing Pass 1, let’s say for a problem, two members have one answer, and the third member (MVP) has a different answer. First determine which answer is correct. Let’s say the 2-member answer was correct. Do not have just one of the 2 members explain the steps taken to reach the answer to the MVP while the other two members engage in other activities. If you listen to your peer, you may find her/his reasoning to be different from yours, which improves your own understanding. Or you may find your way of reasoning to be easier for the MVP to follow. Therefore stay engaged.
+7. One conversation at a time. No side bars. Stay fully engaged in the team conversation.
+8. No multi-tasking (if a discussion is running too long, lean in, and bring conversation to an end).
+
+### Motivation (why)
+- Increased learning occurs when talking about what you have learned, and through teaching.
+- Importance placed on teamwork and communications skills by companies.
+
+## [Problems]{style="color:#FF7F50"}
+
+We need to first load Verzani's textbook packages `MASS`, `UsingR`, our course package `APMA3150` in our working environment. 
+```{r message=FALSE}
+library(MASS)
+library(UsingR)
+library(APMA3150)
+```
+
+### 1. Correlation in StatGrades.
+Part 1: What is the correlation between exam1 and exam2?
+
+Part 2: What is the correlation between exam2 and exam1?
+
+Part 3: Is the linear correlation coefficient between exam1 and exam2 the same as the linear correlation coefficient between exam2 and exam1? Why?
+
+Part 4: Plot exam2 (on y axis) vs exam1 (on x axis) and include the linear regression line, then plot exam1 vs exam2 and include the linear regression line, display such two plots in one column using par(mfcol=c(2,1)).
+
+Part 5: Find the intercepts, slopes, and r2 of the two regression lines. Are they the same? Why?
+
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 2. Major league baseball attendance. Problem 11.2 from URIS.
+For the data set MLBattend (UsingR) concerning Major League Baseball attendance, fit a linear model of attendance modeled by wins. What is the predicted increase in attendance if a team that won 80 games last year wins 90 this year?
+
+#### {.solution}
+```{r}
+# Type your solution here...
+
+```
+Write your conclusion here...
+
+### 3. Influence of parent's heigh on child's height. Problem 11.4 from URIS.
+The galton (UsingR) data set contains data collected by Francis Galton in 1885 concerning the influence a parent’s height has on a child’s height. 
+
+Fit a linear model for a child’s height modeled by his parent’s height. 
+
+Make a scatterplot with a regression line.
+
+What is the value of Beta 1 (slope of best fit line) , and why is this of interest?
+
+*Plot a Q-Q graph for each column in the dataset using qqnorm().
+
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 4. Heart-rate model. Problem 11.16 in URIS.
+Find and plot both the prediction and the confidence intervals for the heart-rate model: 
+  res.mhr <- lm(maxrate ~ age, data=heartrate).
+
+
+#### {.solution}
+```{r}
+# Type your solution here...
+res.mhr <- lm(maxrate ~ age, data=heartrate)
+
+```
+Write your conclusion here...
+
+### 5. Oxides of nitrogen. Problem 12.19 from DEVORE.
+Data is representative of that reported in the
+article “An Experimental Correlation of Oxides of Nitrogen Emissions from Power Boilers Based on Field Data” where x = burner area liberation rate (MBtu/hr-ft2) and y = NOx emission rate (ppm).
+
+a. Assuming that the simple linear regression model is valid, obtain the least squares estimate of the true regression line.
+
+b. What is the estimate of expected NOx emission rate when burner area liberation rate equals 225?
+
+c. Estimate the amount by which you expect NOx emission rate to change when burner area liberation rate is decreased by 50 (175).
+
+d. Would you use the estimated regression line to predict emission rate for a liberation rate of 500? Why or why not?
+
+- No, a liberation rate of 500 is outside the range of the data that the line is fit to, requiring extrapolation. It is unknown how well the line represents data outside of liberation rates of 100 to 400 and therefor should not be used to estimate values there. 
+
+#### {.solution}
+```{r}
+# Type your solution here...
+liberation_rate = c(100, 125, 125, 150, 150, 200, 200, 250, 250, 300, 300, 350, 400, 400)
+NOx_emissions = c(150, 140, 180, 210, 190, 320, 280, 400, 430, 440, 390, 600, 610, 670)
+
+
+```
+Write your conclusion here...
+
+
+### 6. Traffic flow. Problem 12.49 from DEVORE.
+You are told that a 95% CI for expected lead content when traffic flow is 15, based on a sample of n = 10 observations, is (462.1, 597.7). Calculate a CI with confidence level
+99% for expected lead content when traffic flow is 15.
+
+*calculate mean and standard deviation from 95% interval and use to calculate 99% CI
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+### 7. Plasma etching. Problem 12.52 from DEVORE.
+Plasma etching is essential to the fine-line pattern transfer in current semiconductor processes. The article “Ion Beam-Assisted Etching of Aluminum with Chlorine” (J. of the
+Electrochem. Soc., 1985: 2010– 2012) gives the accompanying data (read from a graph) on chlorine flow (x, in SCCM) through a nozzle used in the etching mechanism and etch rate (y, in 100 A/min).
+
+The summary statistics are listed with the problem in the textbook. 
+
+a. Does the simple linear regression model specify a useful relationship between chlorine flow and etch rate?
+
+b. Estimate the true average change in etch rate associated with a 1-SCCM increase in flow rate using a 95% confidence interval, and interpret the interval.
+
+c. Calculate a 95% CI for muY, 3.0, the true average etch rate when flow = 3.0. Has this average been precisely estimated?
+
+d. Calculate a 95% PI for a single future observation on etch rate to be made when flow = 3.0 . Is the prediction likely to be accurate?
+
+
+e. Would the 95% CI and PI when flow = 2.5 be wider or narrower than the corresponding intervals of parts (c) and (d)? Answer without actually computing the intervals.
+
+f. Would you recommend calculating a 95% PI for a flow of 6.0? Explain.
+
+No, this flow is outside the range of data given and therefor would require extrapolation which is best avoided.
+
+#### {.solution}
+```{r}
+# Type your solution here...
+chlorine_flow -> c(1.5, 1.5, 2.0, 2.5, 2.5, 3.0, 3.5, 3.5, 4.0)
+etch_rate -> c(23.0, 24.5, 25.0, 30.0, 33.5, 40.0, 40.5, 47.0, 49.0)
+
+```
+Write your conclusion here...
+
