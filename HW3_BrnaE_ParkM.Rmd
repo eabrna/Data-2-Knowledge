@@ -87,6 +87,7 @@ Part 5: Find the intercepts, slopes, and r2 of the two regression lines. Are the
 #### {.solution}
 ```{r}
 # Type your solution here...
+
 ```
 Write your conclusion here...
 
@@ -97,9 +98,13 @@ For the data set MLBattend (UsingR) concerning Major League Baseball attendance,
 #### {.solution}
 ```{r}
 # Type your solution here...
+attendance_by_wins = lm(attendance ~ wins, data = MLBattend)
+predictions = predict(attendance_by_wins, data.frame(wins = c(80, 90)))
+increase = (predictions[2]-predictions[1])/predictions[1]
+
+print(paste("There will be a ", increase*100, "% increase in attendance"))
 
 ```
-Write your conclusion here...
 
 ### 3. Influence of parent's heigh on child's height. Problem 11.4 from URIS.
 The galton (UsingR) data set contains data collected by Francis Galton in 1885 concerning the influence a parent’s height has on a child’s height. 
@@ -128,10 +133,23 @@ Find and plot both the prediction and the confidence intervals for the heart-rat
 #### {.solution}
 ```{r}
 # Type your solution here...
-res.mhr <- lm(maxrate ~ age, data=heartrate)
+res.mhr <- lm(maxrate ~ age, data=heartrate)  # linear model for using age to predict heart rate
+age_sorted = sort(unique(heartrate$age));     # sorts the ages and removes repeated ages
+
+conf_interval = predict(res.mhr, data.frame(age = age_sorted), interval="confidence");    # confidence interval for each of the ages
+predict_interval = predict(res.mhr, data.frame(age = age_sorted), interval="prediction");   # prediction interval for each of the ages
+
+# plots the original data and the linear regression line
+plot(maxrate ~ age, data=heartrate)
+abline(res.mhr)
+
+# plots the prediction and confidence intervals
+matlines(age_sorted, predict_interval[,2:3], lty = 2, col = 6)
+matlines(age_sorted, conf_interval[,2:3], lty = 2, col = 4)
 
 ```
 Write your conclusion here...
+Confidence intervals are in green and prediction intervals are in red. As expected the prediction intervals are all wider than the confidence intervals.
 
 ### 5. Oxides of nitrogen. Problem 12.19 from DEVORE.
 Data is representative of that reported in the
