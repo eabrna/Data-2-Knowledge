@@ -36,42 +36,6 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
 
-## [Group Work Guideline]{style="color:#0066CC"}
-
-### Overall objectives
-- Teach and learn from your peers (leverage opportunity offered by our physical presence).
-- Improve learning/grade of all your teammates.
-
-### Specific goals for teamwork sessions (what)
-- Every team member should gain a good understanding of each problem and its solution.
-- Discuss any thoughts triggered by problems that can enhance learning.
-- Submit one homework solution per team.
-
-### Methods (how)
-1. Meet each other: names, year in program, degree, hometown, anything else of interest; Learn names.
-2. Choose scribe (to write the team solution) and each team member should take a turn as scribe.
-3. Choose moderator (cut off discussions/watch time); each team member should take a turn as moderator.
-4. Pass individual homework solutions in a circle, so that each team member has read other team members’ homework solutions and is thus aware of the starting set from which your team discussions will follow.
-5. Make two passes through all problems of the assignment:
-    + Pass 1: Focus on deriving answer for the scribe to write into the team homework submission.
-    + Pass 2: Go back through each problem and discuss any thoughts triggered by the problem (e.g., discuss assumptions required for formulas and what happens if they do not hold; this will enhance conceptual learning).
-6. While executing Pass 1, let’s say for a problem, two members have one answer, and the third member (MVP) has a different answer. First determine which answer is correct. Let’s say the 2-member answer was correct. Do not have just one of the 2 members explain the steps taken to reach the answer to the MVP while the other two members engage in other activities. If you listen to your peer, you may find her/his reasoning to be different from yours, which improves your own understanding. Or you may find your way of reasoning to be easier for the MVP to follow. Therefore stay engaged.
-7. One conversation at a time. No side bars. Stay fully engaged in the team conversation.
-8. No multi-tasking (if a discussion is running too long, lean in, and bring conversation to an end).
-
-### Motivation (why)
-- Increased learning occurs when talking about what you have learned, and through teaching.
-- Importance placed on teamwork and communications skills by companies.
-
-## [Problems]{style="color:#FF7F50"}
-
-We need to first load Verzani's textbook packages `MASS`, `UsingR`, our course package `APMA3150` in our working environment. 
-```{r message=FALSE}
-library(MASS)
-library(UsingR)
-library(APMA3150)
-```
-
 ### 1. Correlation in StatGrades.
 Part 1: What is the correlation between exam1 and exam2?
 
