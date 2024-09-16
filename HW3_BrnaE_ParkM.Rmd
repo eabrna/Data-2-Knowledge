@@ -51,10 +51,39 @@ Part 5: Find the intercepts, slopes, and r2 of the two regression lines. Are the
 #### {.solution}
 ```{r}
 # Type your solution here...
+attach(StatGrades)
 
+#Part 1
+c1 = cor(StatGrades$exam1, StatGrades$exam2)
+print(paste('The correlation between exam1 and exam2 is', c1))
+
+#Part 2
+c2 = cor(StatGrades$exam2, StatGrades$exam1)
+print(paste('The correlation between exam1 and exam2 is', c2))
+
+#Part 4
+fit1 <- lm(StatGrades$exam2 ~ StatGrades$exam1)
+fit2 <- lm(StatGrades$exam1 ~ StatGrades$exam2)
+
+par(mfcol=c(1,2))
+plot(StatGrades$exam1, StatGrades$exam2, main= "Exam1 vs Exam2", xlab = 'Exam1', ylab = 'Exam2', ylim = c(0,100))
+abline(fit1, col = 'red')
+plot(StatGrades$exam2, StatGrades$exam1, main = "Exam2 vs Exam1", xlab = 'Exam2', ylab = 'Exam1', ylim = c(0,100))
+abline(fit2, col = 'red')
+
+#Part 5
+slope1 = coef(fit1)[1]
+intercept1 = coef(fit1)[2]
+r21 = summary(fit1)$r.squared
+
+slope2 = coef(fit2)[1]
+intercept2 = coef(fit2)[2]
+r22 = summary(fit2)$r.squared
 ```
-Write your conclusion here...
 
+Part 3: The linear correlation coefficients for both Part 1 and 2 are the same due to the fact that the correlation coefficient is not dependent on the order of the variables.
+
+Part 5: The r^2 values for both fits are the same, which can be understood by the fact that their linear correlation coefficients are the same.The slope and intercept values are different given the nature in which exam1 and exam2 are plotted in eah graph.
 
 ### 2. Major league baseball attendance. Problem 11.2 from URIS.
 For the data set MLBattend (UsingR) concerning Major League Baseball attendance, fit a linear model of attendance modeled by wins. What is the predicted increase in attendance if a team that won 80 games last year wins 90 this year?
