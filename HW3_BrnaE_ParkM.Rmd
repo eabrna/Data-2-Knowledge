@@ -266,40 +266,30 @@ B_0 = 6.448718        # intercept
 B_1 = 10.602564       # slope
 
 mean = mean(chlorine_flow)
+mean_y = mean(etch_rate)
 
 #a
 fit <- lm(etch_rate ~ chlorine_flow)
 summary(fit)$r.squared
 
 #b
-s = sqrt(sum(residuals(fit)^2) / (9-2))
-sb1 = s/sqrt(sum_xi_sqd)
-# t value at 95% Confidence interval and n = 7 (9-2 = 7 DOF) = 2.365
-lower = B_1 - 2.365*(sb1)
-upper = B_1 + 2.365*(sb1)
-
-print(paste('The 95% confidence interval of the data is [', lower, ',', upper, '].'))
+mean1 = mean + 1
+conf_interval_b = predict.lm(fit, data.frame(chlorine_flow = c(mean1)), interval="confidence", level = 0.95);
+print(paste('The 95% confidence interval of the data is [', conf_interval_b[2], ',', conf_interval_b[3], '].'))
 
 #c
 muy = 3.0
-
-y_hat = B_0 + B_1*(muy)
-sy_hat = s * sqrt((1/9) + ((muy - mean)^2)/sum_xi_sqd)
-
-lower1 = B_1 - 2.365*(sy_hat)
-upper1 = B_1 + 2.365*(sy_hat)
-
-print(paste('The 95% confidence interval of the data is [', lower1, ',', upper1, '].'))
+conf_interval_c = predict.lm(fit, data.frame(chlorine_flow = c(muy)), interval="confidence", level = 0.95) 
+print(paste('The 95% confidence interval of the data is [', conf_interval_c[2], ',', conf_interval_c[3], '].'))
 
 #d
-lower2 = y_hat - 2.365 * sqrt(s^2 + sy_hat^2)
-upper2 = y_hat + 2.365 * sqrt(s^2 + sy_hat^2)
+p_interval = predict.lm(fit, data.frame(chlorine_flow = c(muy)), interval="prediction", level = 0.95)
+print(paste('The 95% PI for a single future observation on etch rate is [', p_interval[2], ',', p_interval[3], '].'))
 
-print(paste('The 95% PI for a single future observation on etch rate is [', lower2, ',', upper2, '].'))
 ```
 Part a: Based on the high r^2 value of the liner regression model, this value is a very good indication that the linear model is a useful relationship between chlorine flow and etch rate.
-Part c: Yes, this average has been precisely estimated due to the large percentage of confidence (95%).
-Part d: 
+Part c: We are 95% confident that the true average etch rate lies between the confidence interval of [36.1, 40.2]. This indicates that the average has been estimated precisely given that the true mean of the etch rate (34.7) falls within this range.
+Part d: Yes, we can find that this prediction is likely to be 95% accurate, given that the true mean of the etch rate (34.7) falls within this range.
 Part e: Based on the formula, the both the CI and PI would be expected to be narrower than that of 3.0, since 2.5 is closer to the actual mean of chlorine flow.
 Part f: No, this flow is outside the range of data given and therefore would require extrapolation which is best avoided.
 
