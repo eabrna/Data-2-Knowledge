@@ -246,15 +246,13 @@ d. Calculate a 95% PI for a single future observation on etch rate to be made wh
 ** page 504 (525 in pdf)
 
 e. Would the 95% CI and PI when flow = 2.5 be wider or narrower than the corresponding intervals of parts (c) and (d)? Answer without actually computing the intervals.
-*Based on formula seems like 2.5 should be smaller because closer to the average chlorine flow rate (p. 505)
 
 f. Would you recommend calculating a 95% PI for a flow of 6.0? Explain.
 
-No, this flow is outside the range of data given and therefor would require extrapolation which is best avoided.
 
 #### {.solution}
 ```{r}
-# Type your solution here...
+
 chlorine_flow <- c(1.5, 1.5, 2.0, 2.5, 2.5, 3.0, 3.5, 3.5, 4.0)
 etch_rate <- c(23.0, 24.5, 25.0, 30.0, 33.5, 40.0, 40.5, 47.0, 49.0)
 
@@ -267,7 +265,41 @@ sum_yi_sqd = 11626.75
 B_0 = 6.448718        # intercept
 B_1 = 10.602564       # slope
 
-mean(chlorine_flow)
+mean = mean(chlorine_flow)
+
+#a
+fit <- lm(etch_rate ~ chlorine_flow)
+summary(fit)$r.squared
+
+#b
+s = sqrt(sum(residuals(fit)^2) / (9-2))
+sb1 = s/sqrt(sum_xi_sqd)
+# t value at 95% Confidence interval and n = 7 (9-2 = 7 DOF) = 2.365
+lower = B_1 - 2.365*(sb1)
+upper = B_1 + 2.365*(sb1)
+
+print(paste('The 95% confidence interval of the data is [', lower, ',', upper, '].'))
+
+#c
+muy = 3.0
+
+y_hat = B_0 + B_1*(muy)
+sy_hat = s * sqrt((1/9) + ((muy - mean)^2)/sum_xi_sqd)
+
+lower1 = B_1 - 2.365*(sy_hat)
+upper1 = B_1 + 2.365*(sy_hat)
+
+print(paste('The 95% confidence interval of the data is [', lower1, ',', upper1, '].'))
+
+#d
+lower2 = y_hat - 2.365 * sqrt(s^2 + sy_hat^2)
+upper2 = y_hat + 2.365 * sqrt(s^2 + sy_hat^2)
+
+print(paste('The 95% PI for a single future observation on etch rate is [', lower2, ',', upper2, '].'))
 ```
-Write your conclusion here...
+Part a: Based on the high r^2 value of the liner regression model, this value is a very good indication that the linear model is a useful relationship between chlorine flow and etch rate.
+Part c: Yes, this average has been precisely estimated due to the large percentage of confidence (95%).
+Part d: 
+Part e: Based on the formula, the both the CI and PI would be expected to be narrower than that of 3.0, since 2.5 is closer to the actual mean of chlorine flow.
+Part f: No, this flow is outside the range of data given and therefore would require extrapolation which is best avoided.
 
