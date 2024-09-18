@@ -113,9 +113,22 @@ What is the value of Beta 1 (slope of best fit line) , and why is this of intere
 
 #### {.solution}
 ```{r}
-# Type your solution here...
+fit <- lm(galton$child ~ galton$parent)
+plot(galton$child ~ galton$parent, xlab = 'Parent Height', ylab = 'Child Height')
+abline(fit, col = 'red')
+beta1 = coef(fit)[2]
+print(paste('Beta 1 =', beta1))
+
+## Q-Q plots
+par(mfcol = c(1,2))
+
+qqnorm(galton$child, main="Q-Q plot & line for child's height")
+qqline(galton$child, col="blue")
+
+qqnorm(galton$parent, main="Q-Q plot & line for parent's height")
+qqline(galton$parent, col="blue")
 ```
-Write your conclusion here...
+Beta 1 is the slope of the best fit line which tells us that for every 1 inch that the parent's height increases, the child's height will increase by 0.646 inches based on the linear regression model.
 
 
 ### 4. Heart-rate model. Problem 11.16 in URIS.
