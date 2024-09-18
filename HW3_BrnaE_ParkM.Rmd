@@ -169,17 +169,31 @@ c. Estimate the amount by which you expect NOx emission rate to change when burn
 
 d. Would you use the estimated regression line to predict emission rate for a liberation rate of 500? Why or why not?
 
-- No, a liberation rate of 500 is outside the range of the data that the line is fit to, requiring extrapolation. It is unknown how well the line represents data outside of liberation rates of 100 to 400 and therefor should not be used to estimate values there. 
 
 #### {.solution}
 ```{r}
 # Type your solution here...
+
+## Data
 liberation_rate = c(100, 125, 125, 150, 150, 200, 200, 250, 250, 300, 300, 350, 400, 400)
 NOx_emissions = c(150, 140, 180, 210, 190, 320, 280, 400, 430, 440, 390, 600, 610, 670)
 
+#a
+fit <- lm(NOx_emissions ~ liberation_rate)
+fit$coefficients
 
+#b
+predictionb = predict(fit, data.frame(liberation_rate = c(225)))
+
+print(paste('The estimation of the NOx emission rate when the liberation rate equals 225 MBtu/hr-ft2 is',predictionb, 'ppm.' ))
+
+#c
+predictionc = predict(fit, data.frame(liberation_rate = c(175)))
+
+final_prediction = predictionb-predictionc
+print(paste('As the liberation rate decreases by 50 MBtu/hr-ft2, we expect NOx emissions to increase by', final_prediction, 'ppm.'))
 ```
-Write your conclusion here...
+Part d: No, a liberation rate of 500 is outside the range of the data that the line is fit to, requiring extrapolation. It is unknown how well the line represents data outside of liberation rates of 100 to 400 and therefor should not be used to estimate values there. 
 
 
 ### 6. Traffic flow. Problem 12.49 from DEVORE.
