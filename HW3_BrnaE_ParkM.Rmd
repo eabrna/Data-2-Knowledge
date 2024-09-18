@@ -72,12 +72,12 @@ plot(StatGrades$exam2, StatGrades$exam1, main = "Exam2 vs Exam1", xlab = 'Exam2'
 abline(fit2, col = 'red')
 
 #Part 5
-slope1 = coef(fit1)[1]
-intercept1 = coef(fit1)[2]
+slope1 = coef(fit1)[2]
+intercept1 = coef(fit1)[1]
 r21 = summary(fit1)$r.squared
 
-slope2 = coef(fit2)[1]
-intercept2 = coef(fit2)[2]
+slope2 = coef(fit2)[2]
+intercept2 = coef(fit2)[1]
 r22 = summary(fit2)$r.squared
 ```
 
@@ -113,6 +113,7 @@ What is the value of Beta 1 (slope of best fit line) , and why is this of intere
 
 #### {.solution}
 ```{r}
+# Type your solution here...
 fit <- lm(galton$child ~ galton$parent)
 plot(galton$child ~ galton$parent, xlab = 'Parent Height', ylab = 'Child Height')
 abline(fit, col = 'red')
@@ -128,6 +129,7 @@ qqline(galton$child, col="blue")
 qqnorm(galton$parent, main="Q-Q plot & line for parent's height")
 qqline(galton$parent, col="blue")
 ```
+
 Beta 1 is the slope of the best fit line which tells us that for every 1 inch that the parent's height increases, the child's height will increase by 0.646 inches based on the linear regression model.
 
 
@@ -170,11 +172,10 @@ c. Estimate the amount by which you expect NOx emission rate to change when burn
 d. Would you use the estimated regression line to predict emission rate for a liberation rate of 500? Why or why not?
 
 
+
 #### {.solution}
 ```{r}
 # Type your solution here...
-
-## Data
 liberation_rate = c(100, 125, 125, 150, 150, 200, 200, 250, 250, 300, 300, 350, 400, 400)
 NOx_emissions = c(150, 140, 180, 210, 190, 320, 280, 400, 430, 440, 390, 600, 610, 670)
 
@@ -191,22 +192,41 @@ print(paste('The estimation of the NOx emission rate when the liberation rate eq
 predictionc = predict(fit, data.frame(liberation_rate = c(175)))
 
 final_prediction = predictionb-predictionc
-print(paste('As the liberation rate decreases by 50 MBtu/hr-ft2, we expect NOx emissions to increase by', final_prediction, 'ppm.'))
+print(paste('As the liberation rate decreases by 50 MBtu/hr-ft2, we expect NOx emissions to decrease by', final_prediction, 'ppm.'))
 ```
-Part d: No, a liberation rate of 500 is outside the range of the data that the line is fit to, requiring extrapolation. It is unknown how well the line represents data outside of liberation rates of 100 to 400 and therefor should not be used to estimate values there. 
 
+# Part D:
+- No, a liberation rate of 500 is outside the range of the data that the line is fit to (extrapolation). It is unknown how well the line represents the data outside of the burner area liberation rates of 100 to 400 and therefor should not be used to estimate values outside the range 
 
 ### 6. Traffic flow. Problem 12.49 from DEVORE.
-You are told that a 95% CI for expected lead content when traffic flow is 15, based on a sample of n = 10 observations, is (462.1, 597.7). Calculate a CI with confidence level
-99% for expected lead content when traffic flow is 15.
+You are told that a 95% CI for expected lead content when traffic flow is 15, based on a sample of n = 10 observations, is (462.1, 597.7). Calculate a CI with confidence level 99% for expected lead content when traffic flow is 15.
 
-*calculate mean and standard deviation from 95% interval and use to calculate 99% CI
 
 #### {.solution}
 ```{r}
 # Type your solution here...
+
+# critical t-value for 95% confidence interval with a sample size of 10 
+t_95 = qt( .95, df = 9 )
+
+# distance between points = 2*SE*t
+t_x_SE = (597.7-462.1)/2
+SE = t_x_SE/t_95
+
+# mean is the middle point between the bounds
+mean = (597.7+462.1)/2
+
+# critical t-value for a 99% confidence interval
+t_99 = qt( .99, df = 9 )
+
+#bounds = mean +/- t-score*SE
+upper = mean + t_99*SE
+lower = mean - t_99*SE
+
+print( paste("99% Confidence Interval: (", lower, ",", upper, ")"))
+
+
 ```
-Write your conclusion here...
 
 ### 7. Plasma etching. Problem 12.52 from DEVORE.
 Plasma etching is essential to the fine-line pattern transfer in current semiconductor processes. The article “Ion Beam-Assisted Etching of Aluminum with Chlorine” (J. of the
@@ -217,13 +237,16 @@ The summary statistics are listed with the problem in the textbook.
 a. Does the simple linear regression model specify a useful relationship between chlorine flow and etch rate?
 
 b. Estimate the true average change in etch rate associated with a 1-SCCM increase in flow rate using a 95% confidence interval, and interpret the interval.
+**page 494/5 (515 of pdf) has the formula + an example - true average change refers to the slope regression
 
 c. Calculate a 95% CI for muY, 3.0, the true average etch rate when flow = 3.0. Has this average been precisely estimated?
+**page 501 (522 in pdf)
 
 d. Calculate a 95% PI for a single future observation on etch rate to be made when flow = 3.0 . Is the prediction likely to be accurate?
-
+** page 504 (525 in pdf)
 
 e. Would the 95% CI and PI when flow = 2.5 be wider or narrower than the corresponding intervals of parts (c) and (d)? Answer without actually computing the intervals.
+*Based on formula seems like 2.5 should be smaller because closer to the average chlorine flow rate (p. 505)
 
 f. Would you recommend calculating a 95% PI for a flow of 6.0? Explain.
 
@@ -232,9 +255,19 @@ No, this flow is outside the range of data given and therefor would require extr
 #### {.solution}
 ```{r}
 # Type your solution here...
-chlorine_flow -> c(1.5, 1.5, 2.0, 2.5, 2.5, 3.0, 3.5, 3.5, 4.0)
-etch_rate -> c(23.0, 24.5, 25.0, 30.0, 33.5, 40.0, 40.5, 47.0, 49.0)
+chlorine_flow <- c(1.5, 1.5, 2.0, 2.5, 2.5, 3.0, 3.5, 3.5, 4.0)
+etch_rate <- c(23.0, 24.5, 25.0, 30.0, 33.5, 40.0, 40.5, 47.0, 49.0)
 
+# Summary statistics
+sum_xi = 24.0
+sum_yi = 312.5
+sum_xi_sqd = 70.50
+sum_xiyi = 902.25
+sum_yi_sqd = 11626.75
+B_0 = 6.448718        # intercept
+B_1 = 10.602564       # slope
+
+mean(chlorine_flow)
 ```
 Write your conclusion here...
 
