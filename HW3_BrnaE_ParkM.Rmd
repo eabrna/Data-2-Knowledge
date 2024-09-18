@@ -157,7 +157,7 @@ matlines(age_sorted, conf_interval[,2:3], lty = 2, col = 4)
 
 ```
 Write your conclusion here...
-Confidence intervals are in green and prediction intervals are in red. As expected the prediction intervals are all wider than the confidence intervals.
+Confidence intervals are in blue and prediction intervals are in pink/purple As expected the prediction intervals are all wider than the confidence intervals.
 
 ### 5. Oxides of nitrogen. Problem 12.19 from DEVORE.
 Data is representative of that reported in the
@@ -175,7 +175,6 @@ d. Would you use the estimated regression line to predict emission rate for a li
 
 #### {.solution}
 ```{r}
-# Type your solution here...
 liberation_rate = c(100, 125, 125, 150, 150, 200, 200, 250, 250, 300, 300, 350, 400, 400)
 NOx_emissions = c(150, 140, 180, 210, 190, 320, 280, 400, 430, 440, 390, 600, 610, 670)
 
@@ -201,29 +200,23 @@ print(paste('As the liberation rate decreases by 50 MBtu/hr-ft2, we expect NOx e
 ### 6. Traffic flow. Problem 12.49 from DEVORE.
 You are told that a 95% CI for expected lead content when traffic flow is 15, based on a sample of n = 10 observations, is (462.1, 597.7). Calculate a CI with confidence level 99% for expected lead content when traffic flow is 15.
 
-
 #### {.solution}
 ```{r}
-# Type your solution here...
+# mean is in the middle of the two interval bounds
+lead_content_mean = (462.1 + 597.7)/2
 
-# critical t-value for 95% confidence interval with a sample size of 10 
-t_95 = qt( .95, df = 9 )
+# width of the entire interval = 2*SE*t
+t_critical_95 = qt(.975, df = 8)            # critical t-score for two-tailed interval with 95% confidence
+SE_lead = (597.7 - lead_content_mean)/(t_critical_95)
 
-# distance between points = 2*SE*t
-t_x_SE = (597.7-462.1)/2
-SE = t_x_SE/t_95
+# new t value
+t_critical_99 = qt(.995, df = 8)            # critical t-score for two-tailed interval with 95% confidence
 
-# mean is the middle point between the bounds
-mean = (597.7+462.1)/2
+# 99% confidence interval = mean +/- tscore*SE
+upper_lead_content = lead_content_mean + t_critical_99*SE_lead
+lower_lead_content = lead_content_mean - t_critical_99*SE_lead
 
-# critical t-value for a 99% confidence interval
-t_99 = qt( .99, df = 9 )
-
-#bounds = mean +/- t-score*SE
-upper = mean + t_99*SE
-lower = mean - t_99*SE
-
-print( paste("99% Confidence Interval: (", lower, ",", upper, ")"))
+print( paste("99% Confidence Interval: (",lower_lead_content, ",", upper_lead_content, ")"))
 
 
 ```
@@ -237,13 +230,12 @@ The summary statistics are listed with the problem in the textbook.
 a. Does the simple linear regression model specify a useful relationship between chlorine flow and etch rate?
 
 b. Estimate the true average change in etch rate associated with a 1-SCCM increase in flow rate using a 95% confidence interval, and interpret the interval.
-**page 494/5 (515 of pdf) has the formula + an example - true average change refers to the slope regression
+
 
 c. Calculate a 95% CI for muY, 3.0, the true average etch rate when flow = 3.0. Has this average been precisely estimated?
-**page 501 (522 in pdf)
 
 d. Calculate a 95% PI for a single future observation on etch rate to be made when flow = 3.0 . Is the prediction likely to be accurate?
-** page 504 (525 in pdf)
+
 
 e. Would the 95% CI and PI when flow = 2.5 be wider or narrower than the corresponding intervals of parts (c) and (d)? Answer without actually computing the intervals.
 
@@ -287,9 +279,13 @@ p_interval = predict.lm(fit, data.frame(chlorine_flow = c(muy)), interval="predi
 print(paste('The 95% PI for a single future observation on etch rate is [', p_interval[2], ',', p_interval[3], '].'))
 
 ```
-Part a: Based on the high r^2 value of the liner regression model, this value is a very good indication that the linear model is a useful relationship between chlorine flow and etch rate.
+Part a: Based on the high r$^2$ value of the liner regression model, this value is a very good indication that the linear model is a useful relationship between chlorine flow and etch rate.
+
 Part c: We are 95% confident that the true average etch rate lies between the confidence interval of [36.1, 40.2]. This indicates that the average has been estimated precisely given that the true mean of the etch rate (34.7) falls within this range.
+
 Part d: Yes, we can find that this prediction is likely to be 95% accurate, given that the true mean of the etch rate (34.7) falls within this range.
+
 Part e: Based on the formula, the both the CI and PI would be expected to be narrower than that of 3.0, since 2.5 is closer to the actual mean of chlorine flow.
+
 Part f: No, this flow is outside the range of data given and therefore would require extrapolation which is best avoided.
 
