@@ -59,7 +59,7 @@ print(paste('The correlation between exam1 and exam2 is', c1))
 
 #Part 2
 c2 = cor(StatGrades$exam2, StatGrades$exam1)
-print(paste('The correlation between exam1 and exam2 is', c2))
+print(paste('The correlation between exam2 and exam1 is', c2))
 
 #Part 4
 fit1 <- lm(StatGrades$exam2 ~ StatGrades$exam1)
