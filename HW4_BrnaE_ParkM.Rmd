@@ -1,6 +1,6 @@
 ---
 title: "Homework 04"
-author: "Washington, George; Jefferson, Thomas; Madison, James" # <--- Please change to your names here, format: "LastName, FirstName"
+author: "Brna, Elliot; Park, Mia" # <--- Please change to your names here, format: "LastName, FirstName"
 date: 'Due: Wed Oct 02 | 11:59pm'
 output:
   html_document:
