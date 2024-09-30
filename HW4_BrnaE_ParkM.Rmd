@@ -1,0 +1,354 @@
+---
+title: "Homework 04"
+author: "Washington, George; Jefferson, Thomas; Madison, James" # <--- Please change to your names here, format: "LastName, FirstName"
+date: 'Due: Wed Oct 02 | 11:59pm'
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+**APMA 3150 \| Fall 2024 \| University of Virginia**
+
+***"On my honor, I pledge that I have neither given nor received unauthorized aid on this assignment." - The author of this RMarkdown file.***
+
+<!--- Solution Region --->
+
+```{css solution-region, echo=FALSE}
+.solution {
+    background-color: #232D4B10;
+    border-style: solid;
+    border-color: #232D4B;
+    padding: .5em;
+    margin: 20px
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+# [Group Work Guideline]{style="color:#0066CC"}
+
+### Overall objectives
+- Teach and learn from your peers (leverage opportunity offered by our physical presence).
+- Improve learning/grade of all your teammates.
+
+### Specific goals for teamwork sessions (what)
+- Every team member should gain a good understanding of each problem and its solution.
+- Discuss any thoughts triggered by problems that can enhance learning.
+- Submit one homework solution per team.
+
+### Methods (how)
+1. Meet each other: names, year in program, degree, hometown, anything else of interest; Learn names.
+2. Choose scribe (to write the team solution) and each team member should take a turn as scribe.
+3. Choose moderator (cut off discussions/watch time); each team member should take a turn as moderator.
+4. Pass individual homework solutions in a circle, so that each team member has read other team members’ homework solutions and is thus aware of the starting set from which your team discussions will follow.
+5. Make two passes through all problems of the assignment:
+    + Pass 1: Focus on deriving answer for the scribe to write into the team homework submission.
+    + Pass 2: Go back through each problem and discuss any thoughts triggered by the problem (e.g., discuss assumptions required for formulas and what happens if they do not hold; this will enhance conceptual learning).
+6. While executing Pass 1, let’s say for a problem, two members have one answer, and the third member (MVP) has a different answer. First determine which answer is correct. Let’s say the 2-member answer was correct. Do not have just one of the 2 members explain the steps taken to reach the answer to the MVP while the other two members engage in other activities. If you listen to your peer, you may find her/his reasoning to be different from yours, which improves your own understanding. Or you may find your way of reasoning to be easier for the MVP to follow. Therefore stay engaged.
+7. One conversation at a time. No side bars. Stay fully engaged in the team conversation.
+8. No multi-tasking (if a discussion is running too long, lean in, and bring conversation to an end).
+
+### Motivation (why)
+- Increased learning occurs when talking about what you have learned, and through teaching.
+- Importance placed on teamwork and communications skills by companies.
+
+# [Problems]{style="color:#FF7F50"}
+
+This homework problem set covers correlation & smoothing spline, which will be tested in your exam 1. Part I problems will use `fat` dataset, and Part II problems will use `Animals` dataset. Both are in Verzani's textbook package `UsingR`. **In the problems below, any plot of Y vs X will have the vertical axis as Y-axis and horizontal axis as X-axis.**
+```{r message=FALSE}
+library(UsingR)
+```
+
+## Part I
+
+### Problem 1
+
+Graph 4 plots in 2 rows and 2 columns:
+
+(i) Plot `neck` vs `wrist` for individuals of age larger than 20 and less than 30;
+
+(ii) Plot `neck` vs `wrist` for individuals of age larger than 50;
+
+(iii) Plot `neck` vs `height` for individuals of age larger than 20 and less than 30; 
+
+(iv) Plot `neck` vs `height` for individuals of age larger than 50.
+
+#### {.solution}
+
+```{r}
+attach(fat)
+# Type your code here.
+
+
+
+```
+
+### Problem 2
+
+Find Pearson, Spearman, Kendall correlations for `neck` and `wrist`, and for `height` and `wrist`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+
+
+
+
+
+```
+
+### Problem 3
+
+Find correlation coefficients for `knee` and `wrist` with the three methods: Pearson, Spearman, Kendall.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+
+
+```
+
+### Problem 4
+
+Plot `wrist` vs `knee` with the regression line (in red) and the smoothing spline (in blue) with 40 degrees of freedom.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+
+
+```
+
+### Problem 5
+
+Find the exact degrees of freedom for the best-fitted smoothing spline model with 40 degrees of freedom.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+
+
+```
+
+## Part II
+
+### Problem 1 (1)
+
+Find correlation between `body` and `brain`.
+
+#### {.solution}
+```{r}
+attach(Animals)
+# Type your code here.
+
+```
+
+### Problem 1 (2)
+
+Plot `brain` vs `body` with the linear regression line and a smoothing spline with `df=5`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 1 (3)
+
+Print the intercept and slope for the regression line, and exact degrees of freedom for the best-fitted smoothing spline with `df=5`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+
+```
+
+### Problem 2 (1)
+
+Use the cross product defined as `cross_prod <- (body-mean(body))*(brain-mean(brain))` to create a bar plot of  `cross_prod` as vertical bars.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+
+```
+
+### Problem 2 (2)
+
+List Animals with a negative cross product (only first 6).
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 2 (3)
+
+List Animals with a positive cross product (only first 6).
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 2 (4)
+
+Now plot two bar plots, the first one for negative cross products, the second one for positive cross products.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 3 (1)
+
+Rank the variable `body` and name the rank vector as `rbody`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 3 (2)
+
+Rank the variable `brain` and name the rank vector as `rbrain`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 3 (3)
+
+Plot `body` vs `brain` and `rbody` vs `rbrain` in two scatter plots (left plot for `body` and `brain`, right plot for `rbody` and `rbrain`).
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 3 (4)
+
+Plot the two bar plots of the cross products: on left `body` and `brain`, on the right `rbody` and `rbrain`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 4 (1)
+
+Find the correlation coefficients for `rbody` and `rbrain`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 4 (2)
+
+Plot `rbody` vs `rbrain` with the regression line, and smoothing spline with `df=5`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 5 (1)
+
+Let's do log transformation of data (see Page 120 Verzani).
+```{r}
+lbody <- log(body)
+lbrain <- log(brain)
+```
+
+Do a bar plot of the cross product of `lbody` and `lbrain`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 5 (2)
+
+Plot `lbody` vs `lbrain`, with regression line and smoothing spline with `df=5`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 5 (3)
+
+Find all the correlation coefficients for `lbrain` and `lbody`.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 6 (1)
+
+Lastly, we run correlation tests: for `brain` and `body`, run the correlation test and print the p-value.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 6 (2)
+
+For `rbrain` and `rbody`, run the correlation test and print the p-value.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 6 (3)
+
+For `lbrain` and `lbody`, run the correlation test and print the p-value.
+
+#### {.solution}
+```{r}
+# Type your code here.
+
+```
+
+### Problem 6 (4)
+
+Explain why the second and the third are equal to the corresponding ones in `rbody`-`rbrain` and `lbody-lbrain`.
+
+#### {.solution}
+Your answer:
