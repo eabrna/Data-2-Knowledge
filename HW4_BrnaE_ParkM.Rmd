@@ -85,25 +85,16 @@ Find Pearson, Spearman, Kendall correlations for `neck` and `wrist`, and for `he
 
 #### {.solution}
 ```{r}
-pearson_nw = cor(neck, wrist, method = "pearson")
-spearman_nw = cor(neck, wrist, method = "spearman")
-kendall_nw = cor(neck, wrist, method = "kendall")
+# Neck vs Wrist
+cor.test(neck, wrist, alternative="less", method="pearson")
+cor.test(neck, wrist, alternative="less", method="spearman")
+cor.test(neck, wrist, alternative="less", method="kendall")
 
 # Height vs Wrist 
-pearson_hw = cor(height, wrist, method = "pearson")
-spearman_hw = cor(height, wrist, method = "spearman")
-kendall_hw = cor(height, wrist, method = "kendall")
+cor.test(height, wrist, alternative="less", method="pearson")
+cor.test(height, wrist, alternative="less", method="spearman")
+cor.test(height, wrist, alternative="less", method="kendall")
 
-print(paste('Correlations of Neck and Wrist:'))
-print(paste('pearson method:',pearson_nw)) 
-print(paste('spearman method:',spearman_nw)) 
-print(paste('kendall method:',kendall_nw))
-
-print(paste('Correlations of Height and Wrist:'))
-print(paste('pearson method:',pearson_hw))
-print(paste('spearman method:',spearman_hw))
-print(paste('kendall method:',kendall_hw))
-```
 
 ### Problem 3
 
