@@ -141,10 +141,8 @@ Find the exact degrees of freedom for the best-fitted smoothing spline model wit
 
 #### {.solution}
 ```{r}
-# Type your code here.
-
-
-
+exact_df <- fit1$df
+print(paste('The exact degrees of freedom for this smoothing spline model is', exact_df))
 ```
 
 ## Part II
@@ -156,8 +154,8 @@ Find correlation between `body` and `brain`.
 #### {.solution}
 ```{r}
 attach(Animals)
-# Type your code here.
-
+cor_bb = cor(brain, body)
+cor_bb
 ```
 
 ### Problem 1 (2)
@@ -166,8 +164,12 @@ Plot `brain` vs `body` with the linear regression line and a smoothing spline wi
 
 #### {.solution}
 ```{r}
-# Type your code here.
+plot(body, brain)
+fit <- lm(brain~body)
+abline(fit, col = 'red')
 
+fit1 <- smooth.spline(brain~body, df=5)
+lines(fit1,lwd=2, col="blue")
 ```
 
 ### Problem 1 (3)
@@ -176,9 +178,10 @@ Print the intercept and slope for the regression line, and exact degrees of free
 
 #### {.solution}
 ```{r}
-# Type your code here.
-
-
+exact_df <- fit1$df
+print(paste('Slope =', fit$coefficients[1]))
+print(paste('Intercept =', fit$coefficients[2]))
+print(paste('Exact degrees of freedom =', exact_df))
 ```
 
 ### Problem 2 (1)
