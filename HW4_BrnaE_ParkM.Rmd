@@ -77,9 +77,6 @@ plot(fat_subset1$height, fat_subset1$neck, xlab = "Height", ylab = "Neck", main 
 
 # iv
 plot(fat_subset2$height, fat_subset2$neck, xlab = "Height", ylab = "Neck", main = "Neck vs Height (Age > 50)")
-
-
-
 ```
 
 ### Problem 2
@@ -88,13 +85,24 @@ Find Pearson, Spearman, Kendall correlations for `neck` and `wrist`, and for `he
 
 #### {.solution}
 ```{r}
-# Type your code here.
+pearson_nw = cor(neck, wrist, method = "pearson")
+spearman_nw = cor(neck, wrist, method = "spearman")
+kendall_nw = cor(neck, wrist, method = "kendall")
 
+# Height vs Wrist 
+pearson_hw = cor(height, wrist, method = "pearson")
+spearman_hw = cor(height, wrist, method = "spearman")
+kendall_hw = cor(height, wrist, method = "kendall")
 
+print(paste('Correlations of Neck and Wrist:'))
+print(paste('pearson method:',pearson_nw)) 
+print(paste('spearman method:',spearman_nw)) 
+print(paste('kendall method:',kendall_nw))
 
-
-
-
+print(paste('Correlations of Height and Wrist:'))
+print(paste('pearson method:',pearson_hw))
+print(paste('spearman method:',spearman_hw))
+print(paste('kendall method:',kendall_hw))
 ```
 
 ### Problem 3
