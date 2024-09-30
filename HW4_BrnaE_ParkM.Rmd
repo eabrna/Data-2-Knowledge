@@ -111,10 +111,14 @@ Find correlation coefficients for `knee` and `wrist` with the three methods: Pea
 
 #### {.solution}
 ```{r}
-# Type your code here.
+pearson_kw = cor(knee, wrist, method = "pearson")
+spearman_kw = cor(knee, wrist, method = "spearman")
+kendall_kw = cor(knee, wrist, method = "kendall")
 
-
-
+print(paste('Correlation Coefficients of Knee and Wrist:'))
+print(paste('pearson method:',pearson_kw)) 
+print(paste('spearman method:',spearman_kw)) 
+print(paste('kendall method:',kendall_kw))
 ```
 
 ### Problem 4
