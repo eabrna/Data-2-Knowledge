@@ -127,10 +127,12 @@ Plot `wrist` vs `knee` with the regression line (in red) and the smoothing splin
 
 #### {.solution}
 ```{r}
-# Type your code here.
+plot(knee, wrist)
+fit <- lm(wrist~knee)
+abline(fit, col = 'red')
 
-
-
+fit1<-smooth.spline(wrist~knee,df=40)
+lines(fit1,lwd=2, col="blue")
 ```
 
 ### Problem 5
