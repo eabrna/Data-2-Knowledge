@@ -81,15 +81,11 @@ plot(fat_subset2$height, fat_subset2$neck, xlab = "Height", ylab = "Neck", main 
 
 ### Problem 2
 
-Find Pearson, Spearman, Kendall correlations for `neck` and `wrist`, and for `height` and `wrist`.
+Find Pearson, Spearman, Kendall correlation coefficients for `neck` and `wrist`, and for `height` and `wrist`.
 
 #### {.solution}
 ```{r}
-# Neck vs Wrist - correlation tests and coefficients
-cor.test(neck, wrist, alternative="greater", method="pearson")
-cor.test(neck, wrist, alternative="greater", method="spearman")
-cor.test(neck, wrist, alternative="greater", method="kendall")
-
+# Neck vs Wrist - correlation coefficients
 pearson.nw = cor(neck, wrist, method = "pearson")
 spearman.nw = cor(neck, wrist, method = "spearman")
 kendall.nw = cor(neck, wrist, method = "kendall")
@@ -100,11 +96,7 @@ print(paste('Pearson method:', pearson.nw))
 print(paste('Spearman method:',spearman.nw)) 
 print(paste('Kendall method:',kendall.nw))
 
-# Height vs Wrist - correlation tests and coefficients
-cor.test(height, wrist, alternative="greater", method="pearson")
-cor.test(height, wrist, alternative="greater", method="spearman")
-cor.test(height, wrist, alternative="greater", method="kendall")
-
+# Height vs Wrist - correlation coefficients
 pearson.hw = cor(height, wrist, method = "pearson")
 spearman.hw = cor(height, wrist, method = "spearman")
 kendall.hw = cor(height, wrist, method = "kendall")
