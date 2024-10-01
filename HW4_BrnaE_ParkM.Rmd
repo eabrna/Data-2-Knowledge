@@ -85,23 +85,44 @@ Find Pearson, Spearman, Kendall correlations for `neck` and `wrist`, and for `he
 
 #### {.solution}
 ```{r}
-# Neck vs Wrist
-cor.test(neck, wrist, alternative="less", method="pearson")
-cor.test(neck, wrist, alternative="less", method="spearman")
-cor.test(neck, wrist, alternative="less", method="kendall")
+# Neck vs Wrist - correlation tests and coefficients
+cor.test(neck, wrist, alternative="greater", method="pearson")
+cor.test(neck, wrist, alternative="greater", method="spearman")
+cor.test(neck, wrist, alternative="greater", method="kendall")
 
-# Height vs Wrist 
-cor.test(height, wrist, alternative="less", method="pearson")
-cor.test(height, wrist, alternative="less", method="spearman")
-cor.test(height, wrist, alternative="less", method="kendall")
+pearson.nw = cor(neck, wrist, method = "pearson")
+spearman.nw = cor(neck, wrist, method = "spearman")
+kendall.nw = cor(neck, wrist, method = "kendall")
+
+
+print(paste('Correlation Coefficients of Neck and Wrist:'))
+print(paste('Pearson method:', pearson.nw)) 
+print(paste('Spearman method:',spearman.nw)) 
+print(paste('Kendall method:',kendall.nw))
+
+# Height vs Wrist - correlation tests and coefficients
+cor.test(height, wrist, alternative="greater", method="pearson")
+cor.test(height, wrist, alternative="greater", method="spearman")
+cor.test(height, wrist, alternative="greater", method="kendall")
+
+pearson.hw = cor(height, wrist, method = "pearson")
+spearman.hw = cor(height, wrist, method = "spearman")
+kendall.hw = cor(height, wrist, method = "kendall")
+
+
+print(paste('Correlation Coefficients of Height and Wrist:'))
+print(paste('Pearson method:', pearson.hw, digits = 5)) 
+print(paste('Spearman method:', spearman.hw)) 
+print(paste('Kendall method:',kendall.hw))
+```
 
 
 ### Problem 3
-
 Find correlation coefficients for `knee` and `wrist` with the three methods: Pearson, Spearman, Kendall.
 
 #### {.solution}
 ```{r}
+# calculates all correlation coefficients
 pearson_kw = cor(knee, wrist, method = "pearson")
 spearman_kw = cor(knee, wrist, method = "spearman")
 kendall_kw = cor(knee, wrist, method = "kendall")
@@ -119,9 +140,11 @@ Plot `wrist` vs `knee` with the regression line (in red) and the smoothing splin
 #### {.solution}
 ```{r}
 plot(knee, wrist)
+#linear regression
 fit <- lm(wrist~knee)
 abline(fit, col = 'red')
 
+# smooth spline
 fit1<-smooth.spline(wrist~knee,df=40)
 lines(fit1,lwd=2, col="blue")
 ```
@@ -156,9 +179,11 @@ Plot `brain` vs `body` with the linear regression line and a smoothing spline wi
 #### {.solution}
 ```{r}
 plot(body, brain)
+# linear regression
 fit <- lm(brain~body)
 abline(fit, col = 'red')
 
+# smooth spline
 fit1 <- smooth.spline(brain~body, df=5)
 lines(fit1,lwd=2, col="blue")
 ```
@@ -170,8 +195,8 @@ Print the intercept and slope for the regression line, and exact degrees of free
 #### {.solution}
 ```{r}
 exact_df <- fit1$df
-print(paste('Slope =', fit$coefficients[1]))
-print(paste('Intercept =', fit$coefficients[2]))
+print(paste('Slope =', fit$coefficients[2]))
+print(paste('Intercept =', fit$coefficients[1]))
 print(paste('Exact degrees of freedom =', exact_df))
 ```
 
@@ -182,6 +207,10 @@ Use the cross product defined as `cross_prod <- (body-mean(body))*(brain-mean(br
 #### {.solution}
 ```{r}
 # Type your code here.
+animals = row.names(Animals) #collects names of animals for graphing
+
+cross_prod <- (body-mean(body))*(brain-mean(brain))
+barplot(cross_prod, main = "Cross product of animal brain and body", names.arg = animals, cex.names = .7, las = 2)
 
 
 ```
@@ -194,6 +223,18 @@ List Animals with a negative cross product (only first 6).
 ```{r}
 # Type your code here.
 
+# creates a new data frame with Cross Product added as its own column
+animals.cross <-Animals
+animals.cross$CrossProduct <- cross_prod
+
+# separates out negative cross products
+negative_crossprod <- subset(animals.cross, CrossProduct < 0)
+negative_names <- row.names(negative_crossprod)
+
+print("First 6 animals with negative cross products:")
+negative_names[1:6]
+
+
 ```
 
 ### Problem 2 (3)
@@ -203,6 +244,13 @@ List Animals with a positive cross product (only first 6).
 #### {.solution}
 ```{r}
 # Type your code here.
+
+# separates out positive cross products
+positive_crossprod <- subset(animals.cross, CrossProduct > 0)
+positive_names <- row.names(positive_crossprod)
+
+print("First 6 animals with positive cross products:")
+positive_names[1:6]
 
 ```
 
@@ -214,6 +262,12 @@ Now plot two bar plots, the first one for negative cross products, the second on
 ```{r}
 # Type your code here.
 
+# Negative cross products
+barplot(as.vector(as.matrix(negative_crossprod[3])), names.arg = row.names(negative_crossprod), main = "Negative Cross Products", las = 2, cex.names = .75)
+
+# Positive cross products
+barplot(as.vector(as.matrix(positive_crossprod[3])), names.arg = row.names(positive_crossprod),main = "Positive Cross Products", las=2, cex.names = .7)
+
 ```
 
 ### Problem 3 (1)
@@ -223,6 +277,7 @@ Rank the variable `body` and name the rank vector as `rbody`.
 #### {.solution}
 ```{r}
 # Type your code here.
+rbody = rank(body)
 
 ```
 
@@ -233,7 +288,7 @@ Rank the variable `brain` and name the rank vector as `rbrain`.
 #### {.solution}
 ```{r}
 # Type your code here.
-
+rbrain = rank(brain)
 ```
 
 ### Problem 3 (3)
@@ -243,16 +298,27 @@ Plot `body` vs `brain` and `rbody` vs `rbrain` in two scatter plots (left plot f
 #### {.solution}
 ```{r}
 # Type your code here.
+par(mfrow = c(1,2))
 
+plot(body, brain)
+plot(rbody, rbrain)
 ```
 
 ### Problem 3 (4)
 
-Plot the two bar plots of the cross products: on left `body` and `brain`, on the right `rbody` and `rbrain`.
+Plot the two bar plots of the cross products: one left `body` and `brain`, on the right `rbody` and `rbrain`.
 
 #### {.solution}
 ```{r}
 # Type your code here.
+par(mfrow = c(1,2))
+
+barplot(cross_prod, main = "Cross product brain and body", cex.main=0.9)
+
+# calculates and graphs cross product with ranked variables
+rcross_prod <- (rbody-mean(rbody))*(rbrain-mean(rbrain))
+barplot(rcross_prod, main = "Cross product ranked brains and bodies", cex.main=0.9)
+
 
 ```
 
@@ -264,6 +330,21 @@ Find the correlation coefficients for `rbody` and `rbrain`.
 ```{r}
 # Type your code here.
 
+# pearson coefficient
+cor.rank_pearson = cor(rbody, rbrain, method = "pearson")
+print(paste("Pearson correlation coefficient:", format(cor.rank_pearson, digits = 4)))
+
+
+# kendall coefficient
+cor.rank_kendall = cor(rbody, rbrain, method = "kendall")
+print(paste("Kendall correlation coefficient:", format(cor.rank_kendall, digits = 4)))
+
+# spearman coefficient
+cor.rank_spearman = cor(rbody, rbrain, method = "spearman")
+print(paste("Spearman correlation coefficient:", format(cor.rank_spearman, digits = 4)))
+
+
+
 ```
 
 ### Problem 4 (2)
@@ -273,9 +354,16 @@ Plot `rbody` vs `rbrain` with the regression line, and smoothing spline with `df
 #### {.solution}
 ```{r}
 # Type your code here.
+plot(rbody, rbrain)
 
+#linear regression line
+line <- lm(rbrain~rbody)
+abline(line, col = 'red')
+
+# smooth spline
+spline.fit <- smooth.spline(rbrain~rbody, df=5)
+lines(spline.fit,lwd=2, col="blue")
 ```
-
 ### Problem 5 (1)
 
 Let's do log transformation of data (see Page 120 Verzani).
@@ -289,6 +377,8 @@ Do a bar plot of the cross product of `lbody` and `lbrain`.
 #### {.solution}
 ```{r}
 # Type your code here.
+lcross_prod <- (lbody-mean(lbody))*(lbrain-mean(lbrain))
+barplot(lcross_prod, main = "Cross product of log-scaled animal brain and body")
 
 ```
 
@@ -299,6 +389,15 @@ Plot `lbody` vs `lbrain`, with regression line and smoothing spline with `df=5`.
 #### {.solution}
 ```{r}
 # Type your code here.
+plot(lbody, lbrain)
+
+#linear regression
+lline <- lm(lbrain~lbody)
+abline(lline, col = 'red')
+
+# smoothing splide
+lspline.fit <- smooth.spline(lbrain~lbody, df=5)
+lines(lspline.fit,lwd=2, col="blue")
 
 ```
 
@@ -309,6 +408,14 @@ Find all the correlation coefficients for `lbrain` and `lbody`.
 #### {.solution}
 ```{r}
 # Type your code here.
+lcor.rank_pearson = cor(lbody, lbrain, method = "pearson")
+print(paste("Pearson correlation coefficient:", format(lcor.rank_pearson, digits = 4)))
+
+lcor.rank_kendall = cor(lbody, lbrain, method = "kendall")
+print(paste("Kendall correlation coefficient:", format(lcor.rank_kendall, digits = 4)))
+
+lcor.rank_spearman = cor(lbody, lbrain, method = "spearman")
+print(paste("Spearman correlation coefficient:", format(lcor.rank_spearman, digits = 4)))
 
 ```
 
@@ -319,6 +426,8 @@ Lastly, we run correlation tests: for `brain` and `body`, run the correlation te
 #### {.solution}
 ```{r}
 # Type your code here.
+pearson.p_value = cor.test(brain, body, alternative="greater", method="pearson")$p.value
+print(paste("Pearson p-value for brain and body", pearson.p_value))
 
 ```
 
@@ -329,6 +438,9 @@ For `rbrain` and `rbody`, run the correlation test and print the p-value.
 #### {.solution}
 ```{r}
 # Type your code here.
+rpearson.p_value = cor.test(rbrain, rbody, alternative="greater", method="pearson")$p.value
+print(paste("Pearson p-value for rbrain and rbody", rpearson.p_value))
+
 
 ```
 
@@ -339,12 +451,30 @@ For `lbrain` and `lbody`, run the correlation test and print the p-value.
 #### {.solution}
 ```{r}
 # Type your code here.
+lpearson.p_value = cor.test(lbrain, lbody, alternative="greater", method="pearson")$p.value
+print(paste("Pearson p-value for brain and body", lpearson.p_value))
 
 ```
 
 ### Problem 6 (4)
 
-Explain why the second and the third are equal to the corresponding ones in `rbody`-`rbrain` and `lbody-lbrain`.
+Explain why the second and the third correlation coefficients are equal to the corresponding ones in `rbody`-`rbrain` and `lbody-lbrain`.
+body - brain correlation coefficients
+[1] "Pearson correlation coefficient: 0.7163"
+#[1] "Kendall correlation coefficient: 0.6172"
+#[1] "Spearman correlation coefficient: 0.7163"
+
+rbody - rbrain correlation coefficients
+[1] "Pearson correlation coefficient: 0.7163"
+#[1] "Kendall correlation coefficient: 0.6172"
+#[1] "Spearman correlation coefficient: 0.7163"
+
+lbody-lbrain correlation coefficients
+[1] "Pearson correlation coefficient: 0.7795"
+#[1] "Kendall correlation coefficient: 0.6172"
+#[1] "Spearman correlation coefficient: 0.7163"
+
+
 
 #### {.solution}
-Your answer:
+Your answer: The Spearman and Kendall correlation coefficients match throughout each data set because they look for a non-linear correlations between variables based on rank. Taking the rank of body/brain or log of body/brain doesn't change each animal's rank relative to each other giving the same Kendall and Spearman coefficients.  
