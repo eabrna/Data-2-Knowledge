@@ -1,0 +1,87 @@
+---
+title: "Homework 05"
+author: "Brna, Elliot; Park, Mia" # <--- Please change to your names here, format: "LastName, FirstName"
+date: 'Due: Wed Oct 23 | 11:59pm' # <--- Please change date for each homework
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+**APMA 3150 \| Fall 2024 \| University of Virginia**
+
+***"On my honor, I pledge that I have neither given nor received unauthorized aid on this assignment." - The author of this RMarkdown file.***
+
+<!--- Solution Region --->
+
+```{css solution-region, echo=FALSE}
+.solution {
+    background-color: #232D4B10;
+    border-style: solid;
+    border-color: #232D4B;
+    padding: .5em;
+    margin: 20px
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## [Problems]{style="color:#FF7F50"}
+
+We need to first load Verzani's textbook packages `MASS`, `UsingR`, our course package `APMA3150` in our working environment. 
+```{r message=FALSE}
+library(MASS)
+library(UsingR)
+library(APMA3150)
+```
+
+### 1. Plant a 10-fold cross-validation tree. (Boston dataset)
+Use a random forest model to predict medv, the median value of owner-occupied homes (in
+$1000s). Use the default parameters and report your 10-fold cross-validation MSE.
+
+Hint: you may use a for-loop to train 10 tree models based on the training/testing data splits.
+Note: please use random seed number 3, and use sample() function for setting the folds randomly.
+
+#### {.solution}
+
+```{r}
+
+```
+
+
+### 2. Best random forest tree. (Boston dataset)
+Now we will vary the tuning parameters of mtry and ntree to see what effect they have on
+performance
+
+Use a range of reasonable mtry and ntree values.
+
+• Run random forest 5 times for each tuning set (each time the training data comes from
+sample(nrow(Boston), replace = TRUE); this is called bootstrapping), find
+the out-of-bag MSE each time (out-of-bag data is not used to train the model, so it is a
+good test for the performance of the model) and use the average for the out-of-bag MSEs
+associated with the tuning parameters.
+• When you use the randomForest package, the mse element in the output is a vector
+of out-of-bag MSE values for 1:ntree trees in the forest. This means that you can
+set ntree to some maximum value and get the out-of-bag MSE for any number of trees
+less than or equal to ntree.
+• Make a plot to show the average out-of-bag MSE as a function of mtry and ntree.
+• Report the best tuning parameter combination of mtry and ntree.
+
+Note: random forest is a stochastic model; it will be different every time it runs. Set your own
+random seed to control the uncertainty associated with the stochasticity.
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
