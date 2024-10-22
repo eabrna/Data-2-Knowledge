@@ -55,7 +55,22 @@ Note: please use random seed number 3, and use sample() function for setting the
 #### {.solution}
 
 ```{r}
+set.seed(3)
 
+mse_values = numeric(10)
+
+for (i in 1:10) {
+  set.seed(sample(1:1000, 1))
+  train = sample(1:nrow(Boston), nrow(Boston)/2)
+  boston.test = Boston[-train, "medv"]
+  rf.boston = randomForest(medv ~ ., data = Boston, subset = train, importance = TRUE)
+  yhat.rf = predict(rf.boston, newdata = Boston[-train, ])
+  mse_values[i] = mean((yhat.rf - boston.test)^2)
+}
+
+plot(yhat.rf, boston.test)
+abline(0, 1, col = 'red')
+mse_values
 ```
 
 
