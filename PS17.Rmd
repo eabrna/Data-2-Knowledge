@@ -1,0 +1,196 @@
+---
+title: "Practice Sheet 17"
+author: "Brna, Elliot; Xu, Meng" # <--- Please change to your name here, format: "LastName, FirstName"
+date: 'Due: Tue Oct 22 | 11:59pm'
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+editor_options: 
+  markdown:
+    wrap: 72
+---
+
+**APMA 3150 \| Fall 2024 \| University of Virginia**
+
+<!--- Solution Region --->
+
+```{css solution-region, echo=FALSE}
+.solution {
+    background-color: #232D4B10;
+    border-style: solid;
+    border-color: #232D4B;
+    padding: 0.5em;
+    margin: 20px
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+# [Exercises]{style="color:#FF7F50"}
+
+We have officially ended our coverage of tree models. Let’s cap it off with a Kaggle contest.
+
+## [Practice: house prices prediction using tree models]{style="color:#FF7F50"}
+
+You are to make at least one official entry in the [House Prices: Advanced Regression Techniques](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/overview) Kaggle contest.
+
+* Step 1: You will need to register in Kaggle (it's free). Once you have created your Kaggle account, please team up with no more than two of your classmates for this contest [teaming](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/team).
+
+* Step 2: Read the details of the contest. Understand the data and evaluation function.
+
+* Step 3: Make at least one submission. If you get a score on the public leaderboard of RMSE<0.20 (note RMSE is calculated on the log scale), you receive full credit; otherwise, you’ll lose 20 points.
+
+* Step 4: Complete this practice sheet and submit it to Canvas. Each group should submit only one completed sheet. Please ensure that the names of all group members are listed on this practice sheet.
+
+Tip: Check out the [Kaggle notebooks](https://www.kaggle.com/docs/notebooks) which let you make submissions directly from the notebook. It's very similar to using Google Colab in which you can make a RMarkdown/Jupyter notebook or R/Python scrips that run on the cloud. Free CPU (4 cores, 16GB RAM) - amazing! Let your laptops cool off after all their hard work this semester.
+
+**Top 6 scores from all groups across section 002 & 003 will get certificates!**
+
+### Competition submission
+
+#### {.solution}
+
+1. Your Kaggle names and team name.
+
+* Kaggle name(s): Elliot Brna; ; Meng Xu.
+
+* Kaggle team name (leave NA if you work alone): XXX
+
+2. Your RMSE score and current ranking on the Kaggle leaderboard
+
+* RMSE score: ???
+
+* Current ranking on the Kaggle leaderboard: ???
+
+3. Finally, attach your code for this competition below.
+
+```{r}
+set.seed(100)
+# Write your competition code below.
+
+# load data
+library(readr)
+library(randomForest)
+library(xgboost)
+library(gbm)
+
+train = read.csv('train.csv')
+test = read.csv("test.csv")
+
+# clean data
+
+# Below fields have value of 0 actually
+train$Alley[is.na(train$Alley)] = "No alley access"
+test$Alley[is.na(test$Alley)] = "No alley access"
+train$BsmtQual[is.na(train$BsmtQual)] = "No basement"
+test$BsmtQual[is.na(test$BsmtQual)] = "No basement"
+train$BsmtCond[is.na(train$BsmtCond)] = "No basement"
+test$BsmtCond[is.na(test$BsmtCond)] = "No basement"
+train$BsmtExposure[is.na(train$BsmtExposure)] = "No basement"
+test$BsmtExposure[is.na(test$BsmtExposure)] = "No basement"
+train$BsmtFinType1[is.na(train$BsmtFinType1)] = "No basement"
+test$BsmtFinType1[is.na(test$BsmtFinType1)] = "No basement"
+train$BsmtFinType2[is.na(train$BsmtFinType2)] = "No basement"
+test$BsmtFinType2[is.na(test$BsmtFinType2)] = "No basement"
+train$FireplaceQu[is.na(train$FireplaceQu)] = "No fireplace"
+test$FireplaceQu[is.na(test$FireplaceQu)] = "No fireplace"
+train$GarageType[is.na(train$GarageType)] = "No garage"
+test$GarageType[is.na(test$GarageType)] = "No garage"
+train$GarageFinish[is.na(train$GarageFinish)] = "No garage"
+test$GarageFinish[is.na(test$GarageFinish)] = "No garage"
+train$GarageQual[is.na(train$GarageQual)] = "No garage"
+test$GarageQual[is.na(test$GarageQual)] = "No garage"
+train$GarageCond[is.na(train$GarageCond)] = "No garage"
+test$GarageCond[is.na(test$GarageCond)] = "No garage"
+train$PoolQC[is.na(train$PoolQC)] = "No pool"
+test$PoolQC[is.na(test$PoolQC)] = "No pool"
+train$Fence[is.na(train$Fence)] = "No fence"
+test$Fence[is.na(test$Fence)] = "No fence"
+train$MiscFeature[is.na(train$MiscFeature)] = "None"
+test$MiscFeature[is.na(test$MiscFeature)] = "None"
+# Replace missing values in MasVnrType column in training and test sets with "None", which is most commonly occurring type
+train$MasVnrType[is.na(train$MasVnrType)] = "None"
+test$MasVnrType[is.na(test$MasVnrType)] = "None"
+# Replace missing values in Electrical column in training set with "SBrkr", which is most frequently occurring electrical set-up
+train$Electrical[is.na(train$Electrical)] = "SBrkr"
+# Replace missing values in MSZoning column in test set with "RL", which is most frequently occurring
+test$MSZoning[is.na(test$MSZoning)] = "RL"
+# Replace missing values in Utilities column in test set with "AllPub", which is most frequently occurring
+test$Utilities[is.na(test$Utilities)] = as.factor("AllPub")
+# Replace missing values in Exterior1st column in test set with "VinylSd", which is most frequently occurring
+test$Exterior1st[is.na(test$Exterior1st)] = "VinylSd"
+# Replace missing values in Exterior2nd column in test set with "VinylSd", which is most frequently occurring
+test$Exterior2nd[is.na(test$Exterior2nd)] = "VinylSd"
+# Replace missing value in KitchenQual column in test set with "TA", which is most frequently occurring
+test$KitchenQual[is.na(test$KitchenQual)] = "TA"
+# Replace missing values in Functional column in test set with "Min2", which is most frequently occurring
+test$Functional[is.na(test$Functional)] = "Min2"
+# Replace missing value in SaleType column in test set with "WD", which is most frequently occurring
+test$SaleType[is.na(test$SaleType)] = "WD"
+# Replace missing value in BsmtFinSF1 column in test set with 0 (has no basement)
+test$BsmtFinSF1[is.na(test$BsmtFinSF1)] = 0
+# Replace missing value in BsmtFinSF2 column in test set with 0 (has no basement)
+test$BsmtFinSF2[is.na(test$BsmtFinSF2)] = 0
+# Replace missing value in BsmtUnfSF column in test set with 0 (has no basement)
+test$BsmtUnfSF[is.na(test$BsmtUnfSF)] = 0
+# Replace missing value in TotalBsmtSF column in test set with 0 (has no basement)
+test$TotalBsmtSF[is.na(test$TotalBsmtSF)] = 0
+# Replace missing values in BsmtFullBath column in test set with 0 (has no basement)
+test$BsmtFullBath[is.na(test$BsmtFullBath)] = 0
+# Replace missing values in BsmtHalfBath column in test set with 0 (has no basement)
+test$BsmtHalfBath[is.na(test$BsmtHalfBath)] = 0
+# Replace missing value in GarageCars column in test set with 0 (no garage)
+test$GarageCars[is.na(test$GarageCars)] = 0
+# Replace missing value in GarageArea column in test set with 0 (no garage)
+test$GarageArea[is.na(test$GarageArea)] = 0
+# Replace missing values in LotFrontage column in training and test sets with median
+train$LotFrontage[is.na(train$LotFrontage)] = median(train$LotFrontage, na.rm = TRUE)
+test$LotFrontage[is.na(test$LotFrontage)] = median(test$LotFrontage, na.rm = TRUE)
+# Replace missing values in GarageYrBlt column in training and test sets with 0
+train$GarageYrBlt[is.na(train$GarageYrBlt)] = 0
+test$GarageYrBlt[is.na(test$GarageYrBlt)] = 0
+# Replace missing values in MasVnrArea column in training and test sets with 0
+train$MasVnrArea[is.na(train$MasVnrArea)] = 0
+test$MasVnrArea[is.na(test$MasVnrArea)] = 0
+
+
+```
+
+#### The code chunk below may assist with your data cleaning; feel free to use any part of it as needed.
+```{r eval=FALSE}
+# changing types of the data columns from chr to factor
+for ( i in 1:length(train)) {
+  
+  if (class(train[,i]) == "character"){
+    class(as.factor(train[,i]))
+    train[,i] = as.factor(train[,i])
+  }
+  
+}
+
+
+boost.kaggle = gbm(train$SalePrice ~ ., data = train[,1:80 ], distribution = "gaussian", n.trees = 5000, interaction.depth = 20)
+yhat.test.boost = predict(boost.kaggle, newdata = train[,-81], n.trees = 5000)
+
+
+print("Training RMSE")
+saleprice = train[,81]
+mean((yhat.test.boost - saleprice)^2)
+
+
+
+
+```
+```{r}
+# testing
+yhat.train.boost = predict(boost.kaggle, newdata = test)
+write.csv(yhat.train.boost, 'testprices.csv')
+```
