@@ -98,7 +98,7 @@ random seed to control the uncertainty associated with the stochasticity.
 #### {.solution}
 ```{r}
 # Type your solution here...
-Library(randomForest)
+library(randomForest)
 
 # Set a random seed for reproducibility
 set.seed(857)
@@ -107,8 +107,8 @@ X <- Boston[, -ncol(Boston)]  # 14 Features (all but the last column)
 y <- Boston$medv              # Target variable (last column)
 
 # Range of values for mtry and ntree
-mtry_values <- c( 4, 6, 8, 10, 12, 14)    
-ntree_values <- c(200, 300, 400, 500)  
+mtry_values <- c(2, 4, 6, 8, 10, 12)    
+ntree_values <- c(200, 300, 400, 500, 600)  
 
 # Empty matrix or list to store the results
 results <- matrix(NA, nrow = length(mtry_values), ncol = length(ntree_values))
@@ -135,17 +135,19 @@ for (m in 1:length(mtry_values)) {
       oob_mse[i] <- tail(rf_model$mse, 1)  # Use the last OOB MSE value for the final number of trees
     }
     
-    # Store the average OOB MSE for this (mtry, ntree) combination
+    # Store the average OOB MSE for this combination
     results[m, n] <- mean(oob_mse)
   }
 }
 
-# Find the best mtry and ntree combination based on the lowest OOB MSE
+# Best mtry and ntree combination based on the lowest OOB MSE
 best_params <- which(results == min(results), arr.ind = TRUE)
 best_mtry <- mtry_values[best_params[1]]
 best_ntree <- ntree_values[best_params[2]]
 
-# Output the results
+# Print the results
 cat("Best mtry:", best_mtry, "\nBest ntree:", best_ntree, "\n")
+
+# Graphical representation
 ```
 Write your conclusion here...
