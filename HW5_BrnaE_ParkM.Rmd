@@ -149,5 +149,18 @@ best_ntree <- ntree_values[best_params[2]]
 cat("Best mtry:", best_mtry, "\nBest ntree:", best_ntree, "\n")
 
 # Graphical representation
+library(reshape2)
+results_melted <- melt(results)
+colnames(results_melted) <- c("mtry", "ntree", "OOB_MSE")
+
+# Use ggplot2 for plotting
+library(ggplot2)
+ggplot(results_melted, aes(x = as.factor(ntree), y = OOB_MSE, color = as.factor(mtry), group = mtry)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Average OOB MSE vs ntree for different mtry values",
+       x = "Number of Trees (ntree)",
+       y = "Average out-of-bag MSE",
+       color = "mtry")
 ```
 Write your conclusion here...
