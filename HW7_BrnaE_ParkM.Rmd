@@ -1,0 +1,194 @@
+---
+title: "Homework 07"
+author: "Brna, Elliot; Park, Mia" # <--- Please change to your names here, format: "LastName, FirstName"
+date: 'Due: Wed Nov 6| 11:59pm' # <--- Please change date for each homework
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+**APMA 3150 \| Fall 2024 \| University of Virginia**
+
+***"On my honor, I pledge that I have neither given nor received unauthorized aid on this assignment." - The author of this RMarkdown file.***
+
+<!--- Solution Region --->
+
+```{css solution-region, echo=FALSE}
+.solution {
+    background-color: #232D4B10;
+    border-style: solid;
+    border-color: #232D4B;
+    padding: .5em;
+    margin: 20px
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+
+## [Problems]{style="color:#FF7F50"}
+
+We need to first load Verzani's textbook packages `MASS`, `UsingR`, our course package `APMA3150` in our working environment. 
+```{r message=FALSE}
+library(MASS)
+library(UsingR)
+library(APMA3150)
+```
+
+### 1. Example 8.13 from URIS: Stress Test
+
+A hard-drive manufacturer would like to ensure that the mean time be-
+tween failures (MTBF) for its new hard drive is 1 million hours. A stress test
+is designed that can simulate the workload at a much faster pace. The testers
+assume that a test lasting 10 days correlates with the failure time exceeding
+the 1-million-hour mark. In stress tests of 15 hard drives they found an av-
+erage of 9.5 days, with a standard deviation of 1 day. Does a 90% confidence
+level include 10 days?
+
+#### {.solution}
+
+```{r}
+
+```
+
+
+### 2. Example 8.22 from URIS: Confidence interval based on different probability distribution.
+
+When the parent population is Normal ( μ, s ) with known s, then confidence intervals of the type
+ ̄x ± z ⇤ SD (  ̄x ) and  ̄x ± t ⇤ SE (  ̄x )are both applicable. We have that far enough in the tail, z ⇤ < t ⇤ , but sometimes s < s, so there is no clear winner as to which confidence interval will be smaller for a given sample. Run a simulation 200 times in which the margin of error is calculated both ways for a sample of size 10 with s = 2 and μ = 0. Use a 90% confidence level. What percent of the time was the confidence interval using SD (  ̄x ) smaller?
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 3. Example 9.5 from URIS: Electronic toll-collection systems.
+
+On a number of highways a toll is collected for permission to travel on the roadway. To lessen the burden on drivers, electronic toll-collection systems are often used. An engineer wishes to check the validity of one such system. She arranges to survey a collection unit for single day, finding that of 5,760 transactions, the system accurately read 5,731. Perform a one-sided significance test to see if this is consistent with a 99.9% accuracy rating at the 0.05 significance level. (Do you have any doubts that the normal approximation to the binomial distribution should apply here?)
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 4. Example 9.6 from URIS: Poverty rate
+
+In an example on the poverty rate a count of 22,695 in a survey of 150,000 produced a p-value of 0.079. For the same size sample, what range of counts would have produced a p-value less than 0.05? (Start by asking what observed proportions in the survey would have such a p-value.)
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 5. Example 9.11 from URIS: Father's height
+
+In the babies (UsingR) data set, the variable dht records the father’s height for the sampled cases. Do a significance test of the null hypothesis that the population mean height is 68 inches against an alternative that it is taller. Remove the values of 99 from the data, as these indicate missing data.
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 6. Example 9.16 from URIS: Find sample size
+
+A one-sided, one-sample t-test will be performed. What sample size is needed to have a power of 0.80 for a significance level of 0.05 if delta=.5 and the population standard deviation is assumed to be 5?
+
+Note: please use power.t.test()
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 7. Coin tosses
+
+Let 𝑋 = number of heads in n coin tosses (assume the coin is fair). Let 𝑌 = 𝑋 – 𝑛/2.
+
+(i) Plot (on the same graph) 20 randomly generated histories of 𝑌 vs. 𝑛 up to 𝑛 = 1000 (the
+plot should look like the matplot() with 1000 games in roulette case study).
+(ii) Superimpose on this plot the line of 𝐸(𝑌) versus 𝑛 and the curves for 𝐸(𝑌) ± 2/𝑉𝑎𝑟(𝑌)
+versus 𝑛.
+(iii) Next, let 𝑝̂ = 𝑋/𝑛, and plot the 20 simulated histories of 𝑝̂ versus 𝑛, together with the
+lines of 𝐸(𝑝̂ ) versus n and the curves of 𝐸(𝑝̂ ) ± 2/𝑉𝑎𝑟(𝑝̂ ) versus 𝑛.
+(iv) Discuss your plots.
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 8. Squared relationship
+
+Let 𝑋 be a standard normal random variable. Let 𝑌 = 𝑋 ! .
+
+(i) Write R code to plot the probability density function (PDF) of 𝑋 for values in the range (-
+3,3) with points separated by 0.1. Note: there should be 61 values in the specified range.
+(ii) Write R code to determine the PDF of 𝑌 using equation in Item 34 of stat-techniques.pdf
+for the same range of 𝑋 values as in Part (i). Plot this PDF.
+(iii) What is the distribution of 𝑌? Find density function values using the built-in R function
+for this distribution for the same range of 𝑌 as in Part (ii). Plot these computed density
+function values against the PDF values computed in Part (ii). (Hint: see Item 28 of stat-
+techniques.pdf)
+(iv) Discuss the plot of part (iii).
+
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 9. Winning in the Roulette game
+
+Generate 20 histories with 1000 runs each assuming a 0.5 probability of winning in the roulette
+game (black-red bet). Plot the matplot() of 20 histories with 1000 runs each with the three
+additional lines for mean and 95% confidence interval (as we did in the Roulette case study).
+Discuss your plots.
+
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 10. Inter-arrival times
+
+Call inter-arrival times are exponentially distributed with an arrival rate of 2/sec. Using 100
+arrivals, draw a sample path showing number of calls as a function of time. Discretize time in 0.1
+sec intervals.
+
+(i) Include the graph.
+(ii) What is the mean number of calls in the system at 30 sec?
+(iii) What is the mean of the time taken for 100 arrivals?
+
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
