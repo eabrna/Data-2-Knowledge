@@ -148,9 +148,50 @@ lines of 𝐸(𝑝̂ ) versus n and the curves of 𝐸(𝑝̂ ) ± 2/𝑉𝑎�
 
 #### {.solution}
 ```{r}
-# Type your solution here...
+# (i)
+cum.Y <- matrix(NA, nrow=1000, ncol=20)
+
+for (i in 1:20) {
+  X <- cumsum(rbinom(1000, 1, 0.5))
+  Y <- X - (1:1000) / 2
+  cum.Y[, i] <- Y
+}
+
+cum.Y <- rbind(0, cum.Y)
+
+matplot(0:1000, cum.Y, type="l", xlab="Number of tosses (n)", ylab="Y", col = rainbow(20))
+abline(h=0)
+
+# (ii)
+n_seq <- 0:1000
+EY <- rep(0, length(n_seq)) # E(Y) is zero for all n
+SDY <- sqrt(n_seq / 4)
+
+lines(n_seq, EY, col = "black",lwd = 5)          
+lines(n_seq, EY + 2 * SDY, col = "black", lwd = 2)   
+lines(n_seq, EY - 2 * SDY, col = "black", lwd = 2)
+
+# (iii)
+cum.phat <- matrix(NA, nrow=1000, ncol=20)
+for (i in 1:20) {
+  X <- cumsum(rbinom(1000, 1, 0.5))
+  p_hat <- X / (1:1000)
+  cum.phat[, i] <- p_hat
+}
+
+cum.phat <- rbind(0, cum.phat)
+matplot(0:1000, cum.phat, type="l", xlab="Estimated Porpotion of Heads(p_hat)", ylab="Y", col = rainbow(20))
+abline(h=0.5)
+
+n_seq <- 0:1000
+Ephat <- rep(0.5, length(n_seq)) # E(Y) is zero for all n
+SDphat <- 1 / (2 * sqrt(n_seq)) 
+
+lines(n_seq, Ephat, col = "black",lwd = 5)          
+lines(n_seq, Ephat + 2 * SDphat, col = "black", lwd = 2)   
+lines(n_seq, Ephat - 2 * SDphat, col = "black", lwd = 2)
 ```
-Write your conclusion here...
+(iv). The plots show that as the number of coin tosses increases, both the cumulative deviation (Y) and the estimated proportion of heads (p_hat) behave as expected for a fair coin. The deviation in Y remains within the expected bounds, and the estimated proportion stabilizes around 0.5, with decreasing variability. This confirms that larger sample sizes lead to more accurate and stable estimates of the true probability. 
 
 
 ### 8. Squared relationship
