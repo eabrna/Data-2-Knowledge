@@ -85,9 +85,15 @@ On a number of highways a toll is collected for permission to travel on the road
 
 #### {.solution}
 ```{r}
-# Type your solution here...
+x = 5731
+n = 5760
+p = 0.999
+
+prop.test(x, n, p, alternative = 'greater', conf.level = 0.95, correct = FALSE)
 ```
-Write your conclusion here...
+The p-value (1) of this test is much higher than that of 0.05 indicating that we fail to reject the null hypothesis. There is not statistical evidence that the electronic toll system's accuracy is consistent with a 99.9% accuracy rating.
+
+There are doubts about using a normal approximation here. For the normal approximation to binomial distribution to be reliable, both np and n(1-p) should be greater than 5. The value of n(1-p) is around 5.76 which is very close to 5 and could be the cause of the high p-value seen in this test.
 
 
 ### 4. Example 9.6 from URIS: Poverty rate
