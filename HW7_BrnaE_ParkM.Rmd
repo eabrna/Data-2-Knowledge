@@ -48,20 +48,24 @@ library(APMA3150)
 
 ### 1. Example 8.13 from URIS: Stress Test
 
-A hard-drive manufacturer would like to ensure that the mean time be-
-tween failures (MTBF) for its new hard drive is 1 million hours. A stress test
-is designed that can simulate the workload at a much faster pace. The testers
-assume that a test lasting 10 days correlates with the failure time exceeding
-the 1-million-hour mark. In stress tests of 15 hard drives they found an av-
-erage of 9.5 days, with a standard deviation of 1 day. Does a 90% confidence
-level include 10 days?
+A hard-drive manufacturer would like to ensure that the mean time between failures (MTBF) for its new hard drive is 1 million hours. A stress test
+is designed that can simulate the workload at a much faster pace. The testers assume that a test lasting 10 days correlates with the failure time exceeding
+the 1-million-hour mark. In stress tests of 15 hard drives they found an average of 9.5 days, with a standard deviation of 1 day. Does a 90% confidence level include 10 days?
 
 #### {.solution}
 
 ```{r}
+mu = 9.5
+n = 15
+s = 1
+alpha = 0.1
+t <- qt(1-alpha/2, df = n-1)
+SE <- s/sqrt(n)
 
+conf_interval <- mu + c(-1,1) * (t *SE)
+conf_interval
 ```
-
+The 90% confidence interval ([9.045232, 9.954768]) does not include 10 days. 
 
 ### 2. Example 8.22 from URIS: Confidence interval based on different probability distribution.
 
