@@ -112,10 +112,14 @@ Write your conclusion here...
 In the babies (UsingR) data set, the variable dht records the father’s height for the sampled cases. Do a significance test of the null hypothesis that the population mean height is 68 inches against an alternative that it is taller. Remove the values of 99 from the data, as these indicate missing data.
 #### {.solution}
 ```{r}
-# Type your solution here...
-```
-Write your conclusion here...
+X = 68
+babies_updated <- subset(babies, dht != 99)
+dht <- babies_updated$dht
 
+t_test_result <- t.test(dht, mu = X, alternative = "greater")
+t_test_result
+```
+The p-value from this test is extremely small, indicating that we can reject the null hypothesis at a 95% confidence interval. This shows that there is statistical evidence that population mean height for fathers is greater than 68 inches. 
 
 ### 6. Example 9.16 from URIS: Find sample size
 
