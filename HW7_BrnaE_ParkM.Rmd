@@ -75,6 +75,40 @@ When the parent population is Normal ( μ, s ) with known s, then confidence int
 #### {.solution}
 ```{r}
 # Type your solution here...
+n=10
+alpha = .1
+
+t = qt(1-alpha/2, df = n-1)
+z = qnorm(1-alpha/2)
+
+count = 0
+
+
+for (i in 1:200) {
+ 
+  # Generate the random sample
+  sample <- rnorm(n, mean=0, sd = 2)
+  x_bar <- mean(sample)
+  s <- sd(sample)
+  
+  # Margin of errors calculations
+  SD = 2/sqrt(n)
+  SE = s/sqrt(n)
+  
+  ME_z = z*SD
+  ME_t = t*SE
+  
+  # check if the z/SD based interval is smaller/add to count
+  if (ME_z < ME_t) {
+    count = count + 1
+  }
+  
+}
+
+percent_smaller <- (count/200)*100
+cat("SD/z-based interval was smaller", percent_smaller, "% of the time")
+
+
 ```
 Write your conclusion here...
 
@@ -103,6 +137,25 @@ In an example on the poverty rate a count of 22,695 in a survey of 150,000 produ
 #### {.solution}
 ```{r}
 # Type your solution here...
+n = 150000
+p.hat = 22695/150000
+SD = sqrt(p.hat*(1-p.hat)/n)
+
+# critical z-score for alpha = .05 (.025 bc two tailed test)
+z_crit = qnorm(1-.05/2)
+
+# range of proportions that give p < .05
+p.lower = p.hat - z_crit*SD
+p.upper = p.hat + z_crit*SD
+
+# counts from proportions - round down for upper and up for lower
+low_count = ceiling(p.lower*n)
+high_count = floor(p.upper*n)
+
+cat("The range of counts is (", low_count, ",", high_count, ")")
+
+
+
 ```
 Write your conclusion here...
 
@@ -130,8 +183,14 @@ Note: please use power.t.test()
 #### {.solution}
 ```{r}
 # Type your solution here...
+s = 5
+sig = .05
+pwr = .8
+size = power.t.test(delta = .5, power = pwr, sd=s, sig.level=sig, type = "one.sample", alternative = "one.sided" )$n
+
 ```
 Write your conclusion here...
+A sample size of ~620 is needed to reach a power level of 0.8 with a significance of .05
 
 
 ### 7. Coin tosses
@@ -148,6 +207,7 @@ lines of 𝐸(𝑝̂ ) versus n and the curves of 𝐸(𝑝̂ ) ± 2/𝑉𝑎�
 
 #### {.solution}
 ```{r}
+# (i)
 cum.Y <- matrix(NA, nrow=1000, ncol=20)
 
 for (i in 1:20) {
@@ -179,16 +239,16 @@ for (i in 1:20) {
 }
 
 cum.phat <- rbind(0, cum.phat)
-matplot(0:1000, cum.phat, type="l", xlab="Number of tosses (n)", ylab="Estimated Proportion of heads", col = rainbow(20))
+matplot(0:1000, cum.phat, type="l", xlab="Estimated Porpotion of Heads(p_hat)", ylab="Y", col = rainbow(20))
 abline(h=0.5)
 
 n_seq <- 0:1000
-Ephat <- rep(0.5, length(n_seq)) # E(Y) is 0.5 for all n
+Ephat <- rep(0.5, length(n_seq)) # E(Y) is zero for all n
 SDphat <- 1 / (2 * sqrt(n_seq)) 
 
 lines(n_seq, Ephat, col = "black",lwd = 5)          
-lines(n_seq, Ephat+2*SDphat, lwd=2)   
-lines(n_seq, Ephat-2*SDphat, lwd=2) 
+lines(n_seq, Ephat + 2 * SDphat, col = "black", lwd = 2)   
+lines(n_seq, Ephat - 2 * SDphat, col = "black", lwd = 2)
 ```
 (iv). The plots show that as the number of coin tosses increases, both the cumulative deviation (Y) and the estimated proportion of heads (p_hat) behave as expected for a fair coin. The deviation in Y remains within the expected bounds, and the estimated proportion stabilizes around 0.5, with decreasing variability. This confirms that larger sample sizes lead to more accurate and stable estimates of the true probability. 
 
@@ -211,8 +271,34 @@ techniques.pdf)
 #### {.solution}
 ```{r}
 # Type your solution here...
+
+# (i) PDF of standard normal variable X from -3:3
+X = seq(from = -3, to = 3, by =.1)
+pdf_x = dnorm(X)
+plot(X, pdf_x,  ylab = "PDF of X" , xlab = "X")
+
+# (ii) pdf of Y from Item 34 from stat-techniques
+Y = range^2
+pdf_y1 = 1:61
+
+pdf_y1 <- (1 / (2 * sqrt(Y))) * (dnorm(sqrt(Y)) + dnorm(-sqrt(Y)))
+
+#plot
+plot(Y, pdf_y1, ylab = "PDF of Y", xlab = "Y")
+
+
+# (iii) PDF for Y according to item 28 of stat-techniques
+pdf_y2 <- dchisq(Y, df = 1)
+
+# plotting both
+plot(Y, pdf_y1, ylab = "PDF of Y", xlab = "Y")
+points(Y, pdf_y2, pch = 3, col = "red")
+
+
+
 ```
 Write your conclusion here...
+(iv) Both of the PDF plots are the same, hence the overlap in shape
 
 
 ### 9. Winning in the Roulette game
@@ -225,25 +311,24 @@ Discuss your plots.
 
 #### {.solution}
 ```{r}
-p = 0.5
-cum.win <- matrix(NA, nrow=1000, ncol=20)
+cum.phat <- matrix(NA, nrow=1000, ncol=20)
 for (i in 1:20) {
   X <- cumsum(rbinom(1000, 1, 0.5))
-  pwin <- X / (1:1000)
-  cum.win[, i] <- pwin
+  p_hat <- X / (1:1000)
+  cum.phat[, i] <- p_hat
 }
 
-cum.win <- rbind(0, cum.win)
-matplot(0:1000, cum.win, type="l", xlab="Number of games", ylab="Estimated Probability of Winning", col = rainbow(20))
+cum.phat <- rbind(0, cum.phat)
+matplot(0:1000, cum.phat, type="l", xlab="Estimated Porpotion of Heads(p_hat)", ylab="Y", col = rainbow(20))
 abline(h=0.5)
 
 n_seq <- 0:1000
-Ephat <- rep(p, length(n_seq))
-SDphat <- 2*sqrt(p*(1-p)/n_seq)
+Ephat <- rep(0.5, length(n_seq))
+SDphat <- sqrt(0.5 * 0.5 / n_seq) 
 
 lines(n_seq, Ephat, col = "black",lwd = 5)          
-lines(n_seq, Ephat+2*SDphat, lwd=2)  
-lines(n_seq, Ephat-2*SDphat, lwd=2) 
+lines(n_seq, Ephat + 1.96 * SDphat, col = "black", lwd = 2)   
+lines(n_seq, Ephat - 1.96 * SDphat, col = "black", lwd = 2)
 ```
 The plot displays the estimated proportions of wins from 20 simulated histories of a roulette game, each consisting of 1000 runs with a 0.5 probability of winning. As expected, the average estimated proportion remains stable around the true probability, while the shaded region representing the 95% confidence intervals show how the uncertainty decreases with more trials. Overall, the variability among 20 histories reflects the randomness of the game, but they all converge towards the expected mean as the number of trials grows.
 
@@ -261,5 +346,22 @@ sec intervals.
 #### {.solution}
 ```{r}
 # Type your solution here...
+lamda = 2
+n = 100
+int = 0.1
+
+call_times <- rexp(n, rate = lamda)
+
+time = seq(0, 9.9, by = .1)
+sample.path = cumsum(call_times)
+plot(time, sample.path, xlab="Time (s)", ylab = "Number of calls")
+
+mean_30s = 30*lamda
+cat("Mean number of calls in 30 seconds:", mean_30s, "\n")
+
+mean_100calls = 100/lamda
+cat("Mean time to reach 100 call inter-arrivals", mean_100calls)
+
+
 ```
 Write your conclusion here...
