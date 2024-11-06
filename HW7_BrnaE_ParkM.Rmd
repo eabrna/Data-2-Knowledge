@@ -148,7 +148,6 @@ lines of 𝐸(𝑝̂ ) versus n and the curves of 𝐸(𝑝̂ ) ± 2/𝑉𝑎�
 
 #### {.solution}
 ```{r}
-# (i)
 cum.Y <- matrix(NA, nrow=1000, ncol=20)
 
 for (i in 1:20) {
@@ -180,16 +179,16 @@ for (i in 1:20) {
 }
 
 cum.phat <- rbind(0, cum.phat)
-matplot(0:1000, cum.phat, type="l", xlab="Estimated Porpotion of Heads(p_hat)", ylab="Y", col = rainbow(20))
+matplot(0:1000, cum.phat, type="l", xlab="Number of tosses (n)", ylab="Estimated Proportion of heads", col = rainbow(20))
 abline(h=0.5)
 
 n_seq <- 0:1000
-Ephat <- rep(0.5, length(n_seq)) # E(Y) is zero for all n
+Ephat <- rep(0.5, length(n_seq)) # E(Y) is 0.5 for all n
 SDphat <- 1 / (2 * sqrt(n_seq)) 
 
 lines(n_seq, Ephat, col = "black",lwd = 5)          
-lines(n_seq, Ephat + 2 * SDphat, col = "black", lwd = 2)   
-lines(n_seq, Ephat - 2 * SDphat, col = "black", lwd = 2)
+lines(n_seq, Ephat+2*SDphat, lwd=2)   
+lines(n_seq, Ephat-2*SDphat, lwd=2) 
 ```
 (iv). The plots show that as the number of coin tosses increases, both the cumulative deviation (Y) and the estimated proportion of heads (p_hat) behave as expected for a fair coin. The deviation in Y remains within the expected bounds, and the estimated proportion stabilizes around 0.5, with decreasing variability. This confirms that larger sample sizes lead to more accurate and stable estimates of the true probability. 
 
@@ -226,24 +225,25 @@ Discuss your plots.
 
 #### {.solution}
 ```{r}
-cum.phat <- matrix(NA, nrow=1000, ncol=20)
+p = 0.5
+cum.win <- matrix(NA, nrow=1000, ncol=20)
 for (i in 1:20) {
   X <- cumsum(rbinom(1000, 1, 0.5))
-  p_hat <- X / (1:1000)
-  cum.phat[, i] <- p_hat
+  pwin <- X / (1:1000)
+  cum.win[, i] <- pwin
 }
 
-cum.phat <- rbind(0, cum.phat)
-matplot(0:1000, cum.phat, type="l", xlab="Estimated Porpotion of Heads(p_hat)", ylab="Y", col = rainbow(20))
+cum.win <- rbind(0, cum.win)
+matplot(0:1000, cum.win, type="l", xlab="Number of games", ylab="Estimated Probability of Winning", col = rainbow(20))
 abline(h=0.5)
 
 n_seq <- 0:1000
-Ephat <- rep(0.5, length(n_seq))
-SDphat <- sqrt(0.5 * 0.5 / n_seq) 
+Ephat <- rep(p, length(n_seq))
+SDphat <- 2*sqrt(p*(1-p)/n_seq)
 
 lines(n_seq, Ephat, col = "black",lwd = 5)          
-lines(n_seq, Ephat + 1.96 * SDphat, col = "black", lwd = 2)   
-lines(n_seq, Ephat - 1.96 * SDphat, col = "black", lwd = 2)
+lines(n_seq, Ephat+2*SDphat, lwd=2)  
+lines(n_seq, Ephat-2*SDphat, lwd=2) 
 ```
 The plot displays the estimated proportions of wins from 20 simulated histories of a roulette game, each consisting of 1000 runs with a 0.5 probability of winning. As expected, the average estimated proportion remains stable around the true probability, while the shaded region representing the 95% confidence intervals show how the uncertainty decreases with more trials. Overall, the variability among 20 histories reflects the randomness of the game, but they all converge towards the expected mean as the number of trials grows.
 
