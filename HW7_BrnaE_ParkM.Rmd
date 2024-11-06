@@ -349,18 +349,22 @@ sec intervals.
 lamda = 2
 n = 100
 int = 0.1
+set.seed(43)
 
+# (i) 
 call_times <- rexp(n, rate = lamda)
 
-time = seq(0, 9.9, by = .1)
-sample.path = cumsum(call_times)
-plot(time, sample.path, xlab="Time (s)", ylab = "Number of calls")
+times = cumsum(call_times)
+plot(times, 1:100, xlab="Time (s)", ylab = "Number of calls")
 
-mean_30s = 30*lamda
+
+#(ii) mean number of calls
+mean_30s = sum(times<30)
 cat("Mean number of calls in 30 seconds:", mean_30s, "\n")
 
-mean_100calls = 100/lamda
-cat("Mean time to reach 100 call inter-arrivals", mean_100calls)
+#(iii) mean time taken
+mean_100calls = max(times)
+cat("Mean time to reach 100 call arrivals", mean_100calls)
 
 
 ```
