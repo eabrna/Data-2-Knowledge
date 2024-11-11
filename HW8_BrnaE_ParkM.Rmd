@@ -1,0 +1,190 @@
+---
+title: "Homework 00"
+author: "Washington, George; Jefferson, Thomas; Madison, James" # <--- Please change to your names here, format: "LastName, FirstName"
+date: 'Due: Wed Aug 28 | 11:59pm'
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+**APMA 3150 \| Fall 2024 \| University of Virginia**
+
+***"On my honor, I pledge that I have neither given nor received unauthorized aid on this assignment." - The author of this RMarkdown file.***
+
+<!--- Solution Region --->
+
+```{css solution-region, echo=FALSE}
+.solution {
+    backgroud-color: 232D4B10;
+    border-style: solid;
+    border-color: 232D4B;
+    padding: .5em;
+    margin: 20px
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+
+## [Problems]{style="color:#FF7F50"}
+
+We need to first load Verzani's textbook packages `MASS`, `UsingR`, our course package `APMA3150` in our working environment. 
+```{r message=FALSE}
+library(MASS)
+library(UsingR)
+library(APMA3150)
+```
+
+### 1. Drug therapy. Problem 9.3 from URIS. Perform a one-sided test. 
+A new drug therapy is tested. Of 50 patients in the study, 40 had no recurrence in their illness after 18 months. With no drug therapy, the expected percentage of no recurrence would have been 75%. 
+Does the data support the hypothesis that this percentage has increased? What is the p-value?
+
+
+#### {.solution}
+
+```{r}
+z <- (exec.pay - mean(exec.pay)) / sd(exec.pay)
+out <- abs(z) > 3               # 199 TRUE or FALSE values
+sum(out) / length(z)            # sum of logical
+```
+Write your conclusion here... 
+
+### 2. Medical insurance. Problem 9.4 from URIS. Perform a two-sided test.
+In the United States in 2007, the proportion of adults age 21–24 who had no medical insurance was 28.1%. A survey of 75 recent college graduates in this age range finds that 40% are without insurance. 
+Does this support a difference from the nationwide proportion? Perform a test of significance and report the p-value. Is it significant?
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 3. Price of gasoline. Problem 9.9 from URIS.
+The United States Department of Energy conducts weekly phone surveys on the price of gasoline sold in the United States. 
+Suppose one week the sample average was \$4.03, the sample standard deviation was \$0.42, and the sample size was 800. Perform a one-sided significance test of $H_0 : \mu$ = 4.00 against the alternative $H_A : \mu$ > 4.00.
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 4. SAT scores. Problem 9.10 from URIS.
+The variable sat.m in the data set stud.recs (UsingR) contains math SAT scores for a group of students sampled from a larger population. Test the null hypothesis that the population mean score is 500 against a two-sided alternative. Would you “accept” or “reject” at a 0.05 significance level?
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 5. Cable television service. 
+Two different companies have applied to provide cable television service in a certain region. Let𝑝 denote the proportion of all potential subscribers who favor the first company over the second. Consider testing $H_0$: 𝑝 = 0.5 versus  $H_a$: 𝑝 ≠ 0.5 based on random sample of 25 individuals. Let𝑋 denote the number in the sample who favor the first company and 𝑥 represent the observed value of 𝑋. No continuity correction needed for this problem.
+(i) Of the following rejection regions: $R_1$ = {𝑥: 𝑥 ≤ 7 𝑜𝑟 𝑥 ≥ 18}, $R_2$ = {𝑥: 8 ≤ 𝑥}, $R_3$ =
+{𝑥: 𝑥 ≤ 17}, which is more appreciate? Why?
+(ii) What is the probability distribution of the test statistic 𝑋 when $H_0$ is true? Use it to
+compute the probability of a type-I error using $R_1$ as the rejection region.
+(iii) Using rejection region $R_1$, compute the power when 𝑝 = 0.3, 𝑝 = 0.4, 𝑝 = 0.6, 𝑝 = 0.7.
+(iv) Using rejection region $R_1$, what would you conclude if 6 of the 25 queried favored the
+first company?
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+### 6. Monte Carlo simulation. Estimate the following integral by a Monte Carlo simulation: $\int_{0}^{1} cos( \frac{\pi}{2} x^2)dx$
+
+Hint: If 𝑖 is a random number from 0 to 1 based on the uniform distribution,
+∫ 𝑓(x)dx ≈ $frac{1-0}{N} \sum_{i=1}^{N} f(x_i)$, where 𝑁 should be large enough.
+Your final answer would be the average of multiple evaluations of the above (surely the more
+evaluations, the more confident result is)
+
+
+#### {.solution}
+```{r}
+# Type your solution here...
+```
+Write your conclusion here...
+
+
+
+### 7. Takeoff times. 
+We investigate the takeoff times for various airlines at Newark Liberty International Airport. As with other busy airports, Newark's is characterized by long delays on the runway due to requirements that plane departures be staggered. Does this effect all the airlines equally? Without suspecting that any one airline is favored, we can perform a simultaneous pairwise comparison to investigate. First, we massage the data in the package ewr (UsingR) so that we have two variables: one to keep track of the time and the other a factor indicating the airline.
+
+In modeling, the reference level comes from the first level reported by the levels function. This is
+AA, or American Airlines.
+(i) Make a figure with boxplot for time versus airline.
+(ii) From the boxplot, is there any differences observed?
+(iii) Are these differences statistically significant? Run an ANOVA test to answer that.
+$H_0 : \mu_{AA} = \mu_{CO} = ...= \mu_{US} = \mu $
+$H_A : \mu_{AA} ≠ \mu $ for at least one airline
+(iv) For now, we treat the data as a collection of independent samples (rather than the monthly
+averages of varying sizes it is) and proceed using the TukeyHSD function. The output of
+TukeyHSD is best viewed with the plot of the confidence intervals. This is created by
+calling plot on the output. Use the argument las=2, which turns the tick-mark labels
+perpendicular to the axes. Find simultaneous CIs by TukeyHSD and plot all CIs. Are
+there more than 1 pair differing significantly?
+
+#### {.solution}
+```{r}
+# Type your solution here...
+
+# Prepare the dataset for Anova
+ewr.out <- subset(ewr, subset=inorout=="out", select=3:10)
+head(ewr.out)
+out <- stack(ewr.out)
+names(out) <- c("time","airline")
+levels(out$airline)
+head(out)
+
+
+
+```
+Write your conclusion here...
+
+
+### 8. Folacin content of tea. Devore problem 10.27 9th edition.
+Please finish this problem step by step rather using high level function aov or TukeyHSD. You can only use aov or TukeyHSD to check your answers.
+
+Although tea is the world’s most widely consumed beverage
+after water, little is known about its nutritional value. Folacin is the only B vitamin present in any significant amount in tea, and recent advances in assay methods have made accurate determination of folacin content feasible. Consider the accompanying data on folacin content for randomly selected specimens of the four leading brands of green tea.
+
+1: 7.9 6.2 6.6 8.6 8.9 10.1 9.6
+2: 5.7 7.5 9.8 6.1 8.4
+3: 6.8 7.5 5.0 7.4 5.3 6.1
+4: 6.4 7.1 7.9 4.5 5.0 4.0
+
+Does this data suggest that true average folacin content is the same for all brands?
+a. Carry out a test using $\alpha = 0.05$ via the P-value method.
+b. Assess the plausibility of any assumptions required for your analysis in part (a).
+c. Perform a multiple comparisons analysis to identify significant differences among brands.
+
+
+#### {.solution}
+```{r}
+# Type your solution here...
+one <- c(7.9, 6.2, 6.6, 8.6, 8.9, 10.1, 9.6)
+two <- c(5.7, 7.5, 9.8, 6.1, 8.4)
+three <- c(6.8, 7.5, 5.0, 7.4, 5.3, 6.1)
+four <- c(6.4, 7.1, 7.9, 4.5, 5.0, 4.0)
+
+
+```
+Write your conclusion here...
