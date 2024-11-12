@@ -1,7 +1,7 @@
 ---
-title: "Homework 00"
-author: "Washington, George; Jefferson, Thomas; Madison, James" # <--- Please change to your names here, format: "LastName, FirstName"
-date: 'Due: Wed Aug 28 | 11:59pm'
+title: "Homework 08"
+author: "Brna, Elliot; Park, Mia" # <--- Please change to your names here, format: "LastName, FirstName"
+date: 'Due: Wed Nov 13 | 11:59pm'
 output:
   html_document:
     toc: true
