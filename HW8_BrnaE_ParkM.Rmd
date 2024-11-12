@@ -66,10 +66,14 @@ Does this support a difference from the nationwide proportion? Perform a test of
 
 #### {.solution}
 ```{r}
-# Type your solution here...
-```
-Write your conclusion here...
+n = 75
+p = .281
+phat = 0.40
 
+p_value = pnorm(phat, mean = p, sd = sqrt(p*(1-p)/n), lower.tail = FALSE)
+p_value
+```
+P-value = 0.0109307. Since the p-value is smaller than that of a typical significance level (alpha = 0.05), we can reject the null hypothesis. There is sufficient evidence that rate of uninsured college students is higher than that of the national population.
 
 ### 3. Price of gasoline. Problem 9.9 from URIS.
 The United States Department of Energy conducts weekly phone surveys on the price of gasoline sold in the United States. 
