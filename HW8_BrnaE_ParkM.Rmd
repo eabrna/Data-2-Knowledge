@@ -190,12 +190,89 @@ c. Perform a multiple comparisons analysis to identify significant differences a
 
 #### {.solution}
 ```{r}
-# Type your solution here...
+# a.
 one <- c(7.9, 6.2, 6.6, 8.6, 8.9, 10.1, 9.6)
 two <- c(5.7, 7.5, 9.8, 6.1, 8.4)
 three <- c(6.8, 7.5, 5.0, 7.4, 5.3, 6.1)
 four <- c(6.4, 7.1, 7.9, 4.5, 5.0, 4.0)
+x <- c(one, two, three, four)
+
+I <- 4
+J <- 24
+xbar <- mean(x)
+SST <- sum((x-xbar)^2)
+SSTr <- length(one)*(mean(one)-xbar)^2 + length(two)*(mean(two)-xbar)^2 +   length(three)*(mean(three)-xbar)^2 + length(four)*(mean(four)-xbar)^2
+SSE <- sum((one-mean(one))^2)+sum((two-mean(two))^2)+ sum((three-mean(three))^2)+sum((four-mean(four))^2)
+
+MSTr = SSTr/(I-1)
+MSE = SSE/(J - I)
+F_stat = MSTr/MSE 
+
+p_value <- 1 - pf(F_stat, I-1, J-I)
+
+
+# b.
+# assume each group is normally distributed -> Q-Q Plots for Normality
+par(mfrow = c(2, 2))
+qqnorm(one); qqline(one, col = "red")
+qqnorm(two); qqline(two, col = "red")
+qqnorm(three); qqline(three, col = "red")
+qqnorm(four); qqline(four, col = "red")
+
+#c. 
+mean_one <- mean(one)
+mean_two <- mean(two)
+mean_three <- mean(three)
+mean_four <- mean(four)
+
+n1 <- length(one)
+n2 <- length(two)
+n3 <- length(three)
+n4 <- length(four)
+
+SE_12 <- sqrt(MSE * (1 / n1 + 1 / n2))
+SE_13 <- sqrt(MSE * (1 / n1 + 1 / n3))
+SE_14 <- sqrt(MSE * (1 / n1 + 1 / n4))
+SE_23 <- sqrt(MSE * (1 / n2 + 1 / n3))
+SE_24 <- sqrt(MSE * (1 / n2 + 1 / n4))
+SE_34 <- sqrt(MSE * (1 / n3 + 1 / n4))
+
+alpha = 0.05
+Q <- qtukey(1-alpha, I, n-I)
+
+
+w_12 <- Q * sqrt((MSE/2) * ((1/n1) + (1/n2)))
+w_13 <- Q * sqrt((MSE/2) * ((1/n1) + (1/n3)))
+w_14 <- Q * sqrt((MSE/2) * ((1/n1) + (1/n4)))
+w_23 <- Q * sqrt((MSE/2) * ((1/n3) + (1/n2)))
+w_24 <- Q * sqrt((MSE/2) * ((1/n4) + (1/n2)))
+w_34 <- Q * sqrt((MSE/2) * ((1/n3) + (1/n4)))
+
+w_12 
+w_13 
+w_14 
+w_23 
+w_24 
+w_34 
+
+diff_12 <- mean_one - mean_two
+diff_13 <- mean_one - mean_three
+diff_14 <- mean_one - mean_four
+diff_23 <- mean_two - mean_three
+diff_24 <- mean_two - mean_four
+diff_34 <- mean_three - mean_four
+
+diff_12 
+diff_13 
+diff_14 
+diff_23 
+diff_24 
+diff_34 
 
 
 ```
-Write your conclusion here...
+a. The p-value of this test is smaller than that of significance level 0.05 (0.02755167 < 0.05) therefore we reject the null hypothesis. There is sufficient evidence that there is significant differences in folacin content among brands.
+
+b. QQ plots indicate that normality for each group is plausible. 
+
+c. The pairings of one-two, one-three, two-three, two-four, and three-four differ significantly (difference_ij > w_ij).
