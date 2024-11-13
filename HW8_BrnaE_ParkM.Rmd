@@ -337,4 +337,4 @@ a. The p-value of this test is smaller than that of significance level 0.05 (0.0
 
 b. QQ plots indicate that normality for each group is plausible. 
 
-c. The pairings of one-two, one-three, two-three, two-four, and three-four differ significantly (difference_ij > w_ij).
+c. The pairing of one-four is the only pair that statistically has a significant difference in folacin content among brands since its p-value is smaller than 0.05 and its confidence interval does not include zero. All other pairs are not statistically significant.
