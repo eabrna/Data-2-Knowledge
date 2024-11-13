@@ -125,9 +125,14 @@ evaluations, the more confident result is)
 
 #### {.solution}
 ```{r}
-# Type your solution here...
+func <- function(x) cos((pi / 2) * x^2)
+n <- 10000000
+x_samp <- runif(n, min = 0, max = 1)
+f_values <- func(x_samp)
+integral_estimate <- mean(f_values)
+integral_estimate
 ```
-Write your conclusion here...
+final answer = 0.7798478
 
 
 
