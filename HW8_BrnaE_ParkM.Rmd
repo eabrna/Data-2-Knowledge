@@ -91,9 +91,11 @@ The variable sat.m in the data set stud.recs (UsingR) contains math SAT scores f
 
 #### {.solution}
 ```{r}
-# Type your solution here...
+mean = 500
+
+t.test(stud.recs$sat.m, mu = mean, alt="two.sided", conf.level = 0.95)$p.value
 ```
-Write your conclusion here...
+The p-value is smaller than the significance level (0.01099363 < 0.05) therefore we reject the null hypothesis. There is significant evidence that the mean population score is differs from 500.
 
 
 ### 5. Cable television service. 
